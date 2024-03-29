@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: black;
+  color: white; /* #FBF6EE; */
+}
+
+.layout {
+  @apply bg-[#FBF6EE]  w-screen h-full;
+}
+
+/* -- TopBar -- */
+.top-bar {
+  @apply flex justify-between items-center;
+  @apply bg-[#FBF6EE] w-full h-20 px-5 border-b-2 border-[#E1DDD6];
+}
+
+.logo-name {
+  @apply flex justify-between;
+  @apply w-44 h-4/5;
+}
+.logo {
+  @apply w-14 h-full rounded-full z-10;
+}
+.name {
+  @apply my-auto text-[#6ABE46] font-medium text-xl;
+}
+
+.sign-in-out {
+  @apply flex justify-evenly items-center;
+  @apply w-28 py-3 px-2  bg-[#6ABE46] rounded-full text-black;
+}
+
+/* -- - -- */
+
+/* -- SideBar_Container -- */
+.side-container {
+  @apply flex justify-between my-5 px-40   max-w-full h-full;
+}
+
+/* SideBar */
+
+.side-bar {
+  @apply flex flex-col justify-start items-center;
+  @apply w-[245px] h-lvh bg-[#F3EEE7] rounded-2xl;
+}
+/* bg-[#F3EEE7]*/
+.side-bar-items {
+  @apply overflow-hidden my-[10px] rounded-full h-[50px] w-[220px];
+}
+
+.list-icon {
+  @apply text-[#a4c595];
+}
+.list-text {
+  @apply text-[#575d69];
+}
+
+.side-bar-items:hover {
+  .list-icon {
+    @apply text-[#6ABE46];
+  }
+  .list-text {
+    @apply text-[#060709];
+  }
+}
+
+.side-bar-items:hover {
+  @apply bg-[#F5E2C3];
+}
+
+/* Container */
+
+.container {
+  @apply bg-[#F3EEE7] w-full h-screen mx-4 p-4 rounded-2xl flex justify-end;
+}
+.button {
+  @apply bg-[#6ABE46] text-[#060709]   flex justify-center items-center;
+}
+
+/* -- - -- */
+
+.button,
+.cancle-b,
+.create-b {
+  @apply w-fit h-10 rounded-xl px-5 text-center;
+}
+
+.cancle-b {
+  @apply bg-[#FCE2B5] text-[#152212];
+}
+
+.create-b {
+  @apply bg-[#6ABE46] text-[#152212];
+}
