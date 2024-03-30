@@ -13,7 +13,7 @@ const MenuCategory = () => {
     useState<CreateMenuCategoryPayload>({
       name: "",
       isAvailable: true,
-      companyId: company,
+      companyId: company?.id,
     });
   return (
     <Layout_Back>

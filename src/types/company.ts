@@ -1,7 +1,7 @@
 import { Company } from "@prisma/client";
 
 export interface CompanySlice {
-  company: number;
+  company: Company | null;
   isLoading: boolean;
   error: Error | null;
 }

@@ -1,31 +1,31 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@/utils/prisma";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 
-// Serverless function
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const session = await getSession({ req });
+  const session = await getSession({ req }); // the same with useSeeion(for client side) && getSession(for client side & server side)
   if (session) {
     const { user } = session;
+
     if (user) {
       const name = user.name as string;
       const email = user.email as string;
-      const userFromDb = await prisma.user.findFirst({ where: { email } });
+      const userFromDb = await prisma.user.findFirst({ where: { email } }); // {companyId, email, id, name} --> userTable
+      // where email
       if (userFromDb) {
-        const companyId = userFromDb.companyId;
+        const companyId = userFromDb.companyId; // companyId --> form userTable
         const company = await prisma.company.findFirst({
           where: { id: companyId },
-        });
+        }); // company {} from companyTable
         const locations = await prisma.location.findMany({
           where: { companyId },
-        });
-        const locationIds = locations.map((item) => item.id);
+        }); // locations {} from locationsTable
+        const locationIds = locations.map((item) => item.id); // locationIds from locationsTable
         const tables = await prisma.table.findMany({
-          where: { id: { in: locationIds } },
+          where: { locationId: { in: locationIds } }, // where locationId in locationIds
         });
         const menuCategories = await prisma.menuCategory.findMany({
           where: { companyId },
@@ -57,17 +57,6 @@ export default async function handler(
               in: addonCategories.map((item) => item.id),
             },
           },
-        });
-        res.status(200).json({
-          company,
-          menus,
-          menuCategories,
-          locations,
-          tables,
-          menuCategoryMenus,
-          addonCategories,
-          addons,
-          menuAddonCategories,
         });
       } else {
         const newCompany = await prisma.company.create({
@@ -141,8 +130,10 @@ export default async function handler(
           menuAddonCategories: [newMenuAddonCategory],
         });
       }
+
+      return res.status(200).send(name);
+    } else {
+      res.status(401).send("Unauthorized");
     }
-  } else {
-    res.status(401).send("Unauthorized");
   }
 }

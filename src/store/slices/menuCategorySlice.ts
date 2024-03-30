@@ -32,16 +32,21 @@ export const createMenuCategroy = createAsyncThunk(
     const dataFromServer = await response.json();
     const { menuCategory } = dataFromServer;
     onSuccess && onSuccess();
+    thunkApi.dispatch(addMenuCategory(menuCategory));
   }
 );
 export const menuCategorySlice = createSlice({
   name: "menuCategory",
   initialState,
   reducers: {
+    setMenuCategories: (state, action: PayloadAction<MenuCategory[]>) => {
+      state.menuCategories = action.payload;
+    }, // inital data
     addMenuCategory: (state, action: PayloadAction<MenuCategory>) => {
       state.menuCategories = [...state.menuCategories, action.payload];
     },
   },
 });
 
+export const { setMenuCategories, addMenuCategory } = menuCategorySlice.actions;
 export default menuCategorySlice.reducer;

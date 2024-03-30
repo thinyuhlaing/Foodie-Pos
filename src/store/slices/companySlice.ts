@@ -3,7 +3,7 @@ import { Company } from "@prisma/client";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: CompanySlice = {
-  company: 1,
+  company: null,
   isLoading: false,
   error: null,
 };
@@ -11,7 +11,12 @@ const initialState: CompanySlice = {
 export const companySlice = createSlice({
   name: "company",
   initialState,
-  reducers: {},
+  reducers: {
+    setCompany: (state, action: PayloadAction<Company>) => {
+      state.company = action.payload;
+    },
+  },
 });
 
+export const { setCompany } = companySlice.actions;
 export default companySlice.reducer;
