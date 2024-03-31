@@ -12,18 +12,18 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: black;
-  color: white; /* #FBF6EE; */
+  background-color: text-white-text;
+  color: white;
 }
 
 .layout {
-  @apply bg-[#FBF6EE]  w-screen h-full;
+  @apply bg-white-bg  w-screen h-full;
 }
 
 /* -- TopBar -- */
 .top-bar {
   @apply flex justify-between items-center;
-  @apply bg-[#FBF6EE] w-full h-20 px-5 border-b-2 border-[#E1DDD6];
+  @apply bg-white-bg w-full h-20 px-5 border-b-2 border-[#E1DDD6];
 }
 
 .logo-name {
@@ -39,23 +39,22 @@ body {
 
 .sign-in-out {
   @apply flex justify-evenly items-center;
-  @apply w-28 py-3 px-2  bg-[#6ABE46] rounded-full text-black;
+  @apply w-28 py-3 px-2  bg-white-createB rounded-full text-black;
 }
 
 /* -- - -- */
 
 /* -- SideBar_Container -- */
 .side-container {
-  @apply flex justify-between my-5 px-40   max-w-full h-full;
+  @apply flex justify-evenly my-5 px-10  max-w-full h-full;
 }
 
 /* SideBar */
 
 .side-bar {
   @apply flex flex-col justify-start items-center;
-  @apply w-[245px] h-lvh bg-[#F3EEE7] rounded-2xl;
+  @apply w-[245px] h-lvh bg-white-color rounded-2xl;
 }
-/* bg-[#F3EEE7]*/
 .side-bar-items {
   @apply overflow-hidden my-[10px] rounded-full h-[50px] w-[220px];
 }
@@ -69,10 +68,10 @@ body {
 
 .side-bar-items:hover {
   .list-icon {
-    @apply text-[#6ABE46];
+    @apply text-white-createB;
   }
   .list-text {
-    @apply text-[#060709];
+    @apply text-white-text;
   }
 }
 
@@ -83,10 +82,10 @@ body {
 /* Container */
 
 .container {
-  @apply bg-[#F3EEE7] w-full h-screen mx-4 p-4 rounded-2xl flex justify-end;
+  @apply bg-white-color w-full h-screen mx-6 p-4 rounded-2xl flex flex-col;
 }
 .button {
-  @apply bg-[#6ABE46] text-[#060709]   flex justify-center items-center;
+  @apply bg-white-createB text-white-text   flex justify-center items-center self-end;
 }
 
 /* -- - -- */
@@ -98,9 +97,9 @@ body {
 }
 
 .cancle-b {
-  @apply bg-[#FCE2B5] text-[#152212];
+  @apply bg-white-cancleB text-white-text;
 }
 
 .create-b {
-  @apply bg-[#6ABE46] text-[#152212];
+  @apply bg-white-createB text-white-text;
 }

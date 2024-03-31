@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { CreateMenuPayload } from "@/types/menu";
 import { useAppDispatch } from "@/store/hooks";
 import { showSnackbar } from "@/store/slices/appSnackbarSlice";
+import { createMenu } from "@/store/slices/menuSlice";
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,13 +29,30 @@ export default function MenuDialog({
   const dispatch = useAppDispatch();
 
   const handleCreateMenu = () => {
+    const isValid = newMenu.name;
+    if (!isValid) return;
     dispatch(
-      showSnackbar({
-        type: "error",
-        message: "Error occurred when creating menu",
+      createMenu({
+        ...newMenu,
+        onSuccess: () => {
+          dispatch(
+            showSnackbar({
+              type: "success",
+              message: "Menu created successfully",
+            })
+          );
+          setOpen(false);
+        },
+        onError: () => {
+          dispatch(
+            showSnackbar({
+              type: "error",
+              message: "Error occurred when creating menu",
+            })
+          );
+        },
       })
     );
-    setOpen(false);
   };
 
   return (

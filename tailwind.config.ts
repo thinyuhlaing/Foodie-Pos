@@ -13,8 +13,23 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        white: {
+          bg: "#FCFAF6",
+          text: "#060709",
+          color: "#F3EEE7",
+          cancleB: "#FCE2B5",
+          createB: "#6ABE46",
+        },
+        dark: {
+          bg: "",
+          text: "",
+          color: "",
+        },
+      },
     },
   },
   plugins: [],
 };
 export default config;
+/* bg-[#FBF6EE] text-[#060709]  cancleB-bg-[#FCE2B5]  createB-bg-[#6ABE46]*/

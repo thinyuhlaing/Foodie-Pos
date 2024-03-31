@@ -1,6 +1,6 @@
 import { BaseOptions } from "./user";
 
-export interface BaseMenu {
+interface BaseMenu {
   name: string;
   price: number;
 }

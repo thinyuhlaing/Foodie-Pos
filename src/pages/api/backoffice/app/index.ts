@@ -58,6 +58,18 @@ export default async function handler(
             },
           },
         });
+
+        res.status(200).json({
+          company,
+          menus,
+          menuCategories,
+          locations,
+          tables,
+          menuCategoryMenus,
+          addonCategories,
+          addons,
+          menuAddonCategories,
+        });
       } else {
         const newCompany = await prisma.company.create({
           data: {

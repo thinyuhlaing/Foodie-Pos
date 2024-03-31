@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { motion } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export const buttonVariants = {
   start: {
@@ -61,16 +62,18 @@ export default function TopBar() {
           Foodie Pos
         </motion.div>
       </Box>
-      <motion.button
-        onClick={() => (data ? signOut() : signIn())}
-        className="sign-in-out"
-        variants={buttonVariants}
-        initial="start"
-        whileHover="hover"
-      >
-        {data ? "" : <AccountCircleIcon />}
-        <Box> {data ? "Sign Out" : "Sign In"}</Box>
-      </motion.button>
+      <Link href="../auth/signIn">
+        <motion.button
+          onClick={() => (data ? signOut() : signIn())}
+          className="sign-in-out"
+          variants={buttonVariants}
+          initial="start"
+          whileHover="hover"
+        >
+          {data ? "" : <AccountCircleIcon />}
+          <Box> {data ? "Sign Out" : "Sign In"}</Box>
+        </motion.button>
+      </Link>
     </Box>
   );
 }

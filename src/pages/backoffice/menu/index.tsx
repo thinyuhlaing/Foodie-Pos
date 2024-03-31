@@ -1,12 +1,16 @@
+import ItemCard from "@/components/ItemCard";
 import Layout_Back from "@/components/Layout_Back";
 import MenuDialog from "@/components/MenuDialog";
 import { buttonVariants } from "@/components/TopBar";
+import { useAppSelector } from "@/store/hooks";
 import { CreateMenuPayload } from "@/types/menu";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import CategoryIcon from "@mui/icons-material/Category";
 
 function Menu() {
+  const { menus } = useAppSelector((state) => state.menu);
   const [open, setOpen] = useState(false);
   const [newMenu, setNewMenu] = useState<CreateMenuPayload>({
     name: "",
@@ -24,6 +28,19 @@ function Menu() {
       >
         Menu
       </motion.button>
+
+      <Box className="flex ">
+        {menus.map((item) => {
+          return (
+            <ItemCard
+              key={item.id}
+              icon={<CategoryIcon />}
+              title={item.name}
+              href={`/backoffice/menu/${item.id}`}
+            />
+          );
+        })}
+      </Box>
       <MenuDialog
         open={open}
         setOpen={setOpen}

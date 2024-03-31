@@ -3,6 +3,7 @@ import { AppSlice } from "@/types/app";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setMenuCategories } from "./menuCategorySlice";
 import { setCompany } from "./companySlice";
+import { setMenus } from "./menuSlice";
 
 const initialState: AppSlice = {
   init: false,
@@ -15,12 +16,10 @@ export const fetchAppData = createAsyncThunk(
   async (_, thunkApi) => {
     const response = await fetch(`${config.backofficeApiBaseUrl}/app`);
     const dataFromServer = await response.json();
-    // const { menus, menuCategories, company, menuCategoryMenus } =
-    //   dataFromServer;
-    // //thunkApi.dispatch(setMenus(menus));
-    // thunkApi.dispatch(setMenuCategories(menuCategories));
-    // thunkApi.dispatch(setCompany(company));
-    // //  thunkApi.dispatch(setMenuCategoryMenus(menuCategoryMenus));
+    const { menus, menuCategories, company } = dataFromServer;
+    thunkApi.dispatch(setMenus(menus));
+    thunkApi.dispatch(setMenuCategories(menuCategories));
+    thunkApi.dispatch(setCompany(company));
     thunkApi.dispatch(setInit(true));
   }
 );
