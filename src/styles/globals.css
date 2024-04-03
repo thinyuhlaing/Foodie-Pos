@@ -23,7 +23,7 @@ body {
 /* -- TopBar -- */
 .top-bar {
   @apply flex justify-between items-center;
-  @apply bg-white-bg w-full h-20 px-5 border-b-2 border-[#E1DDD6];
+  @apply bg-white-bg w-full h-20 px-5 border-b-2 border-[#E1DDD6] text-white-text;
 }
 
 .logo-name {
@@ -92,7 +92,8 @@ body {
 
 .button,
 .cancle-b,
-.create-b {
+.create-b,
+.delete-b {
   @apply w-fit h-10 rounded-xl px-5 text-center;
 }
 
@@ -102,4 +103,8 @@ body {
 
 .create-b {
   @apply bg-white-createB text-white-text;
+}
+
+.delete-b {
+  @apply bg-red-300 text-white-text;
 }

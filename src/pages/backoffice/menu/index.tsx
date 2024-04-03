@@ -15,6 +15,7 @@ function Menu() {
   const [newMenu, setNewMenu] = useState<CreateMenuPayload>({
     name: "",
     price: 0,
+    menuCategoryIds: [],
   });
 
   return (
@@ -29,7 +30,7 @@ function Menu() {
         Menu
       </motion.button>
 
-      <Box className="flex ">
+      <Box className="flex flex-warp">
         {menus.map((item) => {
           return (
             <ItemCard

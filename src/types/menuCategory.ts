@@ -12,8 +12,6 @@ export interface UpdateMenuCategoryPayload extends BaseOptions {
   isAvailable: boolean;
 }
 
-export interface UpdateMenuPayload extends BaseOptions {
+export interface DeleteMenuCategoryPayload extends BaseOptions {
   id: number;
-  name: string;
-  price: number;
 }

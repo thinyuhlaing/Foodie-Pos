@@ -1,5 +1,9 @@
 import { config } from "@/config";
-import { CreateMenuPayload } from "@/types/menu";
+import {
+  CreateMenuPayload,
+  DeleteMenuPayload,
+  UpdateMenuPayload,
+} from "@/types/menu";
 import { Menu } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { stat } from "fs";
@@ -35,6 +39,40 @@ export const createMenu = createAsyncThunk(
   }
 );
 
+// export const updateMenu = createAsyncThunk(
+//   "menuCategory/updateMenu",
+//   async (payload: UpdateMenuPayload, thunkApi) => {
+//     const { onSuccess } = payload;
+//     const response = await fetch(`${config.backofficeApiBaseUrl}/menu`, {
+//       method: "PUT",
+//       headers: {
+//         "content-type": "application/json",
+//       },
+//       body: JSON.stringify(payload),
+//     });
+//     const dataFromServer = await response.json();
+//     const { updatedMenu } = dataFromServer;
+//     onSuccess && onSuccess();
+//     thunkApi.dispatch(replaceMenuCategory(updatedMenu));
+//   }
+// );
+
+export const deleteMenu = createAsyncThunk(
+  "menuCategory/deleteMenuCategory",
+  async (payload: DeleteMenuPayload, thunkApi) => {
+    const { id, onSuccess } = payload;
+    console.log(id);
+    const response = await fetch(
+      `${config.backofficeApiBaseUrl}/menu?id=${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    onSuccess && onSuccess();
+    thunkApi.dispatch(removeMenus(id));
+  }
+);
+
 export const menuSlice = createSlice({
   name: "menu",
   initialState,
@@ -45,9 +83,14 @@ export const menuSlice = createSlice({
     addMenus: (state, action: PayloadAction<Menu>) => {
       state.menus = [...state.menus, action.payload];
     },
-    removeMeus: (state, action: PayloadAction<Menu>) => {
+    replaceMenus: (state, action: PayloadAction<Menu>) => {
+      state.menus = state.menus.map((item) =>
+        item.id === action.payload.id ? action.payload : item
+      );
+    },
+    removeMenus: (state, action: PayloadAction<number>) => {
       state.menus = state.menus.filter(
-        (menu) => (menu.id === action.payload.id ? false : true) // false --> delete & true --> undelete
+        (menu) => (menu.id === action.payload ? false : true) // false --> delete & true --> undelete
       );
     },
   },
@@ -69,5 +112,6 @@ export const menuSlice = createSlice({
   },
 });
 
-export const { setMenus, addMenus, removeMeus } = menuSlice.actions;
+export const { setMenus, addMenus, replaceMenus, removeMenus } =
+  menuSlice.actions;
 export default menuSlice.reducer;

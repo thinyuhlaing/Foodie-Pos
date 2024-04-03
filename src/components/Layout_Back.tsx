@@ -20,7 +20,6 @@ export default function Layout_Back({ children }: Props) {
       dispatch(fetchAppData());
     }
   }, []);
-  console.log(init);
   return (
     <Box className="layout">
       <TopBar />

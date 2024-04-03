@@ -17,7 +17,6 @@ const MenuCategory = () => {
       isAvailable: false,
       companyId: company?.id,
     });
-
   // const router = useRouter();
   // console.log("router:query", rounter.query);
   // console.log("router:pathname", rounter.pathname);
@@ -31,7 +30,7 @@ const MenuCategory = () => {
       >
         MenuCategory
       </Button>
-      <Box className="flex ">
+      <Box className="flex flex-wrap ">
         {menuCategories.map((item) => {
           return (
             <ItemCard

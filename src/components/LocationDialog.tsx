@@ -1,56 +1,55 @@
 import { useAppDispatch } from "@/store/hooks";
 import { showSnackbar } from "@/store/slices/appSnackbarSlice";
-import { createMenuCategroy } from "@/store/slices/menuCategorySlice";
-import { CreateMenuCategoryPayload } from "@/types/menuCategory";
+import { createLocation } from "@/store/slices/locationSlice";
+import { CreateLocationPayload } from "@/types/location";
 import {
   Box,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
-  Radio,
+  FormControl,
   TextField,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  newMenuCategory: CreateMenuCategoryPayload;
-  setNewMenuCategory: Dispatch<SetStateAction<CreateMenuCategoryPayload>>;
+  setOpen: React.Dispatch<SetStateAction<boolean>>;
+  location: CreateLocationPayload;
+  setLocation: Dispatch<SetStateAction<CreateLocationPayload>>;
 }
 
-export default function MenuCategoryDialog({
+export default function LocationDialog({
   open,
   setOpen,
-  newMenuCategory,
-  setNewMenuCategory,
+  location,
+  setLocation,
 }: Props) {
   const dispatch = useAppDispatch();
-  const handleCreateMenuCategory = () => {
-    const isValid = newMenuCategory.name;
-    if (!isValid) return;
+  const handleCreateMenu = () => {
+    const isValid =
+      location.name && location.street && location.township && location.city;
+    if (!isValid) return alert("Missing required data");
     dispatch(
-      createMenuCategroy({
-        ...newMenuCategory,
+      createLocation({
+        ...location,
         onSuccess: () => {
           dispatch(
             showSnackbar({
               type: "success",
-              message: "Menu category created successfully",
+              message: "Location created successfully",
             })
           );
+
           setOpen(false);
         },
         onError: () => {
           dispatch(
             showSnackbar({
               type: "error",
-              message: "Error occurred when creating menu category",
+              message: "Error occured when creating location",
             })
           );
         },
@@ -60,24 +59,35 @@ export default function MenuCategoryDialog({
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <Box className="bg-[#FBF6EE]">
-        <DialogTitle>New Menu Category</DialogTitle>
+        <DialogTitle>New Location</DialogTitle>
         <DialogContent className="w-80">
           <Box>
             <TextField
-              placeholder="name"
+              placeholder="Name"
               sx={{ width: "100%", mb: 2 }}
               onChange={(evt) =>
-                setNewMenuCategory({
-                  ...newMenuCategory,
-                  name: evt.target.value,
-                })
+                setLocation({ ...location, name: evt.target.value })
               }
             />
-            <FormControlLabel
-              label="Available"
-              control={<Checkbox />}
-              onChange={(evt, value) =>
-                setNewMenuCategory({ ...newMenuCategory, isAvailable: value })
+            <TextField
+              placeholder="Street"
+              sx={{ width: "100%", mb: 2 }}
+              onChange={(evt) =>
+                setLocation({ ...location, street: evt.target.value })
+              }
+            />
+            <TextField
+              placeholder="Township"
+              sx={{ width: "100%", mb: 2 }}
+              onChange={(evt) =>
+                setLocation({ ...location, township: evt.target.value })
+              }
+            />
+            <TextField
+              placeholder="City"
+              sx={{ width: "100%", mb: 2 }}
+              onChange={(evt) =>
+                setLocation({ ...location, city: evt.target.value })
               }
             />
           </Box>
@@ -101,7 +111,7 @@ export default function MenuCategoryDialog({
               textShadow: "0px 0px 8px rgb(74, 122, 54)",
               boxShadow: "0px 0px 10px rgb(114, 164, 93)",
             }}
-            onClick={handleCreateMenuCategory}
+            onClick={handleCreateMenu}
           >
             Create
           </motion.button>

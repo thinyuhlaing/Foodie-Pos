@@ -11,6 +11,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { motion } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useAppSelector } from "@/store/hooks";
 
 export const buttonVariants = {
   start: {
@@ -36,6 +37,7 @@ const animation = {
 };
 
 export default function TopBar() {
+  const { selectedLocation } = useAppSelector((state) => state.app);
   const { data } = useSession();
 
   return (
@@ -62,6 +64,9 @@ export default function TopBar() {
           Foodie Pos
         </motion.div>
       </Box>
+      <Typography variant="h6" className="w-fit">
+        {selectedLocation?.name}
+      </Typography>
       <Link href="../auth/signIn">
         <motion.button
           onClick={() => (data ? signOut() : signIn())}

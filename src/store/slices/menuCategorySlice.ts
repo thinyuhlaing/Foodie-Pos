@@ -1,6 +1,7 @@
 import { config } from "@/config";
 import {
   CreateMenuCategoryPayload,
+  DeleteMenuCategoryPayload,
   UpdateMenuCategoryPayload,
 } from "@/types/menuCategory";
 import { MenuCategory } from "@prisma/client";
@@ -59,7 +60,22 @@ export const updateMenuCategory = createAsyncThunk(
     thunkApi.dispatch(replaceMenuCategory(updatedMenuCategory));
   }
 );
-// need  update
+
+export const deleteMenuCategory = createAsyncThunk(
+  "menuCategory/deleteMenuCategory",
+  async (payload: DeleteMenuCategoryPayload, thunkApi) => {
+    const { id, onSuccess } = payload;
+    console.log(id);
+    const response = await fetch(
+      `${config.backofficeApiBaseUrl}/menu-category?id=${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    onSuccess && onSuccess();
+    thunkApi.dispatch(removeMenuCategory(id));
+  }
+);
 
 export const menuCategorySlice = createSlice({
   name: "menuCategory",
@@ -76,9 +92,9 @@ export const menuCategorySlice = createSlice({
         item.id === action.payload.id ? action.payload : item
       );
     },
-    removeMenuCategory: (state, action: PayloadAction<MenuCategory>) => {
+    removeMenuCategory: (state, action: PayloadAction<number>) => {
       state.menuCategories = state.menuCategories.filter((menuCategory) =>
-        menuCategory.id === action.payload.id ? false : true
+        menuCategory.id === action.payload ? false : true
       );
     },
   },
@@ -91,3 +107,10 @@ export const {
   removeMenuCategory,
 } = menuCategorySlice.actions;
 export default menuCategorySlice.reducer;
+
+/* app start --> []
+C --> [{}, {}, {}]
+network request --> [{}, {}, {}] <-- Read
+U --> [{}, {}, {}] --> [{}, {}, {}]
+D --> [{}, {}, {}] --> [{}, {}]
+*/

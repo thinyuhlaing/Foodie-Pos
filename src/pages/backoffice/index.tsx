@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import Order from "./order";
 
 export default function backOff() {
-  const dispatch = useDispatch();
   const { data } = useSession();
   return <>{data ? <Order /> : <SignIn />}</>;
 }

@@ -4,6 +4,8 @@ import menuCategoryReducer from "./slices/menuCategorySlice";
 import snackbarReducer from "./slices/appSnackbarSlice";
 import companyReducer from "./slices/companySlice";
 import appReducer from "./slices/appSlice";
+import menuCategoryMenuReducer from "./slices/menuCategoryMenuSlice";
+import locationSliceReducer from "./slices/locationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export const store = configureStore({
     snackbar: snackbarReducer,
     company: companyReducer,
     app: appReducer,
+    menuCategoryMenu: menuCategoryMenuReducer,
+    location: locationSliceReducer,
   },
 });
 
