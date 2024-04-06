@@ -40,7 +40,6 @@ model Location {
 model MenuCategory {
   id                           Int                            @id @default(autoincrement())
   name                         String
-  isAvailable                  Boolean                        @default(true)
   companyId                    Int
   isArchived                   Boolean                        @default(false)
   createdAt                    DateTime                       @default(now())

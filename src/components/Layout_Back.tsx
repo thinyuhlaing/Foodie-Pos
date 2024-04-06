@@ -12,6 +12,9 @@ interface Props {
 }
 
 export default function Layout_Back({ children }: Props) {
+  const { disabledLocationMenuCategories } = useAppSelector(
+    (state) => state.disabledLocationMenuCategory
+  );
   const { init } = useAppSelector((state) => state.app);
   const { data } = useSession();
   const dispatch = useAppDispatch();

@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 export default function SignIn() {
   return (
     <Layout_Back>
-      <Box className=" px-10 py-[6.5rem] bg-white-bg w-1/4 h-4/6 flex flex-col justify-between items-center mx-auto mt-6 rounded-xl">
+      <Box className=" px-10 py-[5rem] bg-white-bg w-1/4 h-4/6 flex flex-col justify-between items-center mx-auto mt-6 rounded-xl">
         <Typography variant="h4" className="text-white-text">
           Login
         </Typography>

@@ -25,6 +25,17 @@ const MenuCategoryDetail = () => {
   const router = useRouter();
   const menuCategoryId = Number(router.query.id); //router:query {id: '1'}
   const { menuCategories } = useAppSelector((state) => state.menuCategory);
+  const { selectedLocation } = useAppSelector((state) => state.app);
+  const { disabledLocationMenuCategories } = useAppSelector(
+    (state) => state.disabledLocationMenuCategory
+  );
+  const isAvailable = disabledLocationMenuCategories.find(
+    (item) =>
+      item.menuCategoryId === menuCategoryId &&
+      item.locationId === selectedLocation?.id
+  )
+    ? false
+    : true; // to check location
   const menuCategory = menuCategories.find(
     (item) => item.id === menuCategoryId
   );
@@ -32,14 +43,18 @@ const MenuCategoryDetail = () => {
 
   useEffect(() => {
     if (menuCategory) {
-      setUpdateData(menuCategory);
+      setUpdateData({
+        ...menuCategory,
+        isAvailable,
+        locationId: selectedLocation?.id,
+      });
     }
-  }, []);
+  }, [menuCategory]);
 
   const handleUpdate = () => {
     const shouldUpdate =
       updateData?.name !== menuCategory?.name ||
-      updateData?.isAvailable !== menuCategory?.isAvailable;
+      updateData?.isAvailable !== isAvailable;
     if (!shouldUpdate) {
       return router.push("/backoffice/menu-category");
     }
@@ -67,7 +82,6 @@ const MenuCategoryDetail = () => {
       </Layout_Back>
     );
   }
-
   return (
     <Layout_Back>
       <Box className=" flex justify-between">

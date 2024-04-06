@@ -23,6 +23,7 @@ import { showSnackbar } from "@/store/slices/appSnackbarSlice";
 import { createMenu } from "@/store/slices/menuSlice";
 import { useState } from "react";
 import { MenuCategory } from "@prisma/client";
+import { useRouter } from "next/router";
 
 interface Props {
   open: boolean;
@@ -43,7 +44,7 @@ export default function MenuDialog({
   const dispatch = useAppDispatch();
   const { menuCategories } = useAppSelector((state) => state.menuCategory);
   // const [selected, setSelected] = useState<number[]>([]);
-
+  const router = useRouter();
   const handleCreateMenu = () => {
     const isValid =
       newMenu.name && newMenu.price && newMenu.menuCategoryIds.length > 0;
@@ -60,6 +61,7 @@ export default function MenuDialog({
           );
           setOpen(false);
         },
+
         onError: () => {
           dispatch(
             showSnackbar({
@@ -71,7 +73,6 @@ export default function MenuDialog({
       })
     );
   };
-  console.log(newMenu);
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <Box className="bg-[#FBF6EE]">
@@ -80,7 +81,7 @@ export default function MenuDialog({
           <Box>
             <TextField
               placeholder="name"
-              sx={{ width: "100%", mb: 2 }}
+              sx={{ width: "100%", mb: 3 }}
               onChange={(evt) =>
                 setNewMenu({ ...newMenu, name: evt.target.value })
               }
@@ -88,7 +89,7 @@ export default function MenuDialog({
             <TextField
               type="number"
               placeholder="price"
-              sx={{ width: "100%", mb: 2 }}
+              sx={{ width: "100%", mb: 3 }}
               onChange={(evt) =>
                 setNewMenu({ ...newMenu, price: Number(evt.target.value) })
               }
@@ -98,7 +99,7 @@ export default function MenuDialog({
               <Select
                 multiple
                 value={newMenu.menuCategoryIds}
-                // input={<OutlinedInput label="Menu Category" />}
+                input={<OutlinedInput label="Menu Category" />}
                 onChange={(evt) => {
                   const selected = evt.target.value as number[];
                   setNewMenu({ ...newMenu, menuCategoryIds: selected });

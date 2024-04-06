@@ -57,6 +57,7 @@ export default function MenuCategoryDialog({
       })
     );
   };
+
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <Box className="bg-[#FBF6EE]">

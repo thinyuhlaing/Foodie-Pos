@@ -31,16 +31,25 @@ export default async function handler(
           where: { companyId, isArchived: false },
         });
         const menuCategoryIds = menuCategories.map((item) => item.id);
+        const disabledLocationMenuCategories =
+          await prisma.disabledLocationMenuCategory.findMany({
+            where: { menuCategoryId: { in: menuCategoryIds } },
+          });
         const menuCategoryMenus = await prisma.menuCategoryMenu.findMany({
           where: { menuCategoryId: { in: menuCategoryIds } },
         });
         const menuCategoryMenuIds = menuCategoryMenus.map(
           (item) => item.menuId
         );
+
         const menus = await prisma.menu.findMany({
           where: { id: { in: menuCategoryMenuIds }, isArchived: false },
         });
         const menuIds = menus.map((item) => item.id);
+        const disabledLocationMenus =
+          await prisma.disabledLocationMenu.findMany({
+            where: { menuId: { in: menuIds } },
+          });
         const menuAddonCategories = await prisma.menuAddonCategory.findMany({
           where: { menuId: { in: menuIds } },
         });
@@ -69,6 +78,8 @@ export default async function handler(
           addonCategories,
           addons,
           menuAddonCategories,
+          disabledLocationMenuCategories,
+          disabledLocationMenus,
         });
       } else {
         const newCompany = await prisma.company.create({

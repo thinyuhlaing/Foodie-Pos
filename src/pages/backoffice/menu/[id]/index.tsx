@@ -3,10 +3,9 @@ import Layout_Back from "@/components/Layout_Back";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { showSnackbar } from "@/store/slices/appSnackbarSlice";
 import { updateMenuCategory } from "@/store/slices/menuCategorySlice";
-import { deleteMenu } from "@/store/slices/menuSlice";
+import { deleteMenu, updateMenu } from "@/store/slices/menuSlice";
 import { UpdateMenuPayload } from "@/types/menu";
 //import { updateMenuCategory } from "@/store/slices/menuCategorySlice";
-import { UpdateMenuCategoryPayload } from "@/types/menuCategory";
 import {
   Box,
   Button,
@@ -23,45 +22,84 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
+import { MenuCategory } from "@prisma/client";
 const MenuCategoryDetail = () => {
   const [open, setOpen] = useState<boolean>(false);
-
+  const [selected, setSelected] = useState<number[]>([]);
   const [updateData, setUpdateData] = useState<UpdateMenuPayload>();
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const menuId = Number(router.query.id); //router:query {id: '1'}
   const { menus } = useAppSelector((state) => state.menu);
   const menu = menus.find((item) => item.id === menuId);
-  const dispatch = useAppDispatch();
+  const { menuCategoryMenus } = useAppSelector(
+    (state) => state.menuCategoryMenu
+  );
   const { menuCategories } = useAppSelector((state) => state.menuCategory);
+  const selectedLocation = useAppSelector(
+    (state) => state.app.selectedLocation
+  );
+
+  const selectedMenuCategoryIds = menuCategoryMenus
+    .filter((item) => item.menuId === menuId)
+    .map((item) => {
+      const menuCategory = menuCategories.find(
+        (menuCategory) => menuCategory.id === item.menuCategoryId
+      ) as MenuCategory;
+      return menuCategory.id;
+    });
+
+  const { disabledLocationMenus } = useAppSelector(
+    (state) => state.disabledLocationMenu
+  );
+  const isAvailable = disabledLocationMenus.find(
+    (item) => item.locationId === selectedLocation?.id && item.menuId === menuId
+  )
+    ? false
+    : true;
   useEffect(() => {
     if (menu) {
       setUpdateData(menu);
+      setSelected(selectedMenuCategoryIds);
     }
-  }, []);
+  }, [menu]);
 
-  // const handleUpdate = () => {
-  //   const shouldUpdate =
-  //     updateData?.name !== menu?.name || updateData?.price !== menu?.price;
-  //   if (!shouldUpdate) {
-  //     return router.push("/backoffice/menu-category");
-  //   }
-  //   updateData &&
-  //     dispatch(
-  //       updateMenuCategory({
-  //         ...updateData,
-  //         onSuccess: () => {
-  //           dispatch(
-  //             showSnackbar({
-  //               type: "success",
-  //               message: "Updated menu category created successfully",
-  //             })
-  //           );
-  //           router.push("/backoffice/menu-category");
-  //         },
-  //       })
-  //     );
-  // };
+  useEffect(() => {
+    if (updateData) {
+      setUpdateData({
+        ...updateData,
+        locationId: selectedLocation?.id,
+        isAvailable,
+        menuCategoryIds: selected,
+      });
+    }
+  }, [selected, disabledLocationMenus]);
+
+  console.log("menu:", updateData);
+
+  const handleUpdate = () => {
+    // const shouldUpdate =
+    //   updateData?.name !== menu?.name || updateData?.price !== menu?.price;
+    // if (!shouldUpdate) {
+    //   return router.push("/backoffice/menu");
+    // }
+    updateData &&
+      dispatch(
+        updateMenu({
+          ...updateData,
+          onSuccess: () => {
+            dispatch(
+              showSnackbar({
+                type: "success",
+                message: "Updated menu created successfully",
+              })
+            );
+            router.push("/backoffice/menu");
+          },
+        })
+      );
+  };
 
   if (!updateData) {
     return (
@@ -74,7 +112,7 @@ const MenuCategoryDetail = () => {
   return (
     <Layout_Back>
       <Box className=" flex justify-between">
-        <Box className="flex flex-col w-80  justify-between h-72 ">
+        <Box className="flex flex-col w-80  justify-between h-[22rem]  ">
           <TextField
             value={updateData.name}
             onChange={(evt) =>
@@ -90,7 +128,26 @@ const MenuCategoryDetail = () => {
 
           <FormControl sx={{ width: "100%" }}>
             <InputLabel>Menu Category</InputLabel>
-            <Select input={<OutlinedInput label="Menu Category" />}>
+            <Select
+              value={selected}
+              multiple
+              input={<OutlinedInput label="Menu Category" />}
+              onChange={(evt) => {
+                const selected = evt.target.value as number[];
+                setSelected(selected);
+              }}
+              renderValue={() => {
+                return selected
+                  .map(
+                    (itemId) =>
+                      menuCategories.find(
+                        (menuCategory) => menuCategory.id === itemId
+                      ) as MenuCategory
+                  )
+                  .map((item) => item.name)
+                  .join(", ");
+              }}
+            >
               {menuCategories.map((item) => {
                 return (
                   <MenuItem key={item.id} value={item.id}>
@@ -101,10 +158,21 @@ const MenuCategoryDetail = () => {
               })}
             </Select>
           </FormControl>
+          <FormControlLabel
+            control={
+              <Checkbox
+                defaultChecked={isAvailable}
+                onChange={(evt, value) =>
+                  setUpdateData({ ...updateData, isAvailable: value })
+                }
+              />
+            }
+            label="Available"
+          />
           <Button
             className="create-b "
             sx={{ mt: 4, width: "fit-content" }}
-            //onClick={handleUpdate}
+            onClick={handleUpdate}
           >
             Update
           </Button>

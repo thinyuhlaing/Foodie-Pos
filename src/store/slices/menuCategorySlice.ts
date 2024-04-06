@@ -6,6 +6,12 @@ import {
 } from "@/types/menuCategory";
 import { MenuCategory } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  addDisabledLocationMenuCategory,
+  removeDisabledLocationMenuCategory,
+  setDisabledLocationMenuCategory,
+} from "./disabledLocationMenuCategorySlice";
+import { fetchAppData, setInit } from "./appSlice";
 
 interface MenuCategorySlice {
   menuCategories: MenuCategory[]; // name, isAvailable, companyId
@@ -34,9 +40,13 @@ export const createMenuCategroy = createAsyncThunk(
       }
     );
     const dataFromServer = await response.json();
-    const { menuCategory } = dataFromServer;
+    const { menuCategory, disabledLocationMenuCategoriesAdd } = dataFromServer;
     onSuccess && onSuccess();
     thunkApi.dispatch(addMenuCategory(menuCategory));
+    disabledLocationMenuCategoriesAdd &&
+      thunkApi.dispatch(
+        addDisabledLocationMenuCategory(disabledLocationMenuCategoriesAdd)
+      );
   }
 );
 
@@ -55,9 +65,20 @@ export const updateMenuCategory = createAsyncThunk(
       }
     );
     const dataFromServer = await response.json();
-    const { updatedMenuCategory } = dataFromServer;
+    const { updatedMenuCategory, disabledLocationMenuCategories } =
+      dataFromServer;
+    console.log("hey:", disabledLocationMenuCategories);
     onSuccess && onSuccess();
+
+    thunkApi.dispatch(
+      setDisabledLocationMenuCategory(disabledLocationMenuCategories)
+    );
     thunkApi.dispatch(replaceMenuCategory(updatedMenuCategory));
+
+    // thunkApi.dispatch(
+    //   addDisabledLocationMenuCategory(disabledLocationMenuCategoriesAddObj)
+    // ); call fetch data instand of disabledLocationMenuCategoriesAdd data
+    // thunkApi.dispatch(setInit(false));
   }
 );
 
@@ -65,7 +86,6 @@ export const deleteMenuCategory = createAsyncThunk(
   "menuCategory/deleteMenuCategory",
   async (payload: DeleteMenuCategoryPayload, thunkApi) => {
     const { id, onSuccess } = payload;
-    console.log(id);
     const response = await fetch(
       `${config.backofficeApiBaseUrl}/menu-category?id=${id}`,
       {
@@ -107,10 +127,3 @@ export const {
   removeMenuCategory,
 } = menuCategorySlice.actions;
 export default menuCategorySlice.reducer;
-
-/* app start --> []
-C --> [{}, {}, {}]
-network request --> [{}, {}, {}] <-- Read
-U --> [{}, {}, {}] --> [{}, {}, {}]
-D --> [{}, {}, {}] --> [{}, {}]
-*/

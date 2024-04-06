@@ -1,3 +1,4 @@
+import { Menu } from "@prisma/client";
 import { BaseOptions } from "./user";
 
 interface BaseMenu {
@@ -13,10 +14,9 @@ export interface CreateMenuPayload extends BaseOptions {
 export interface DeleteMenuPayload extends BaseOptions {
   id: number;
 }
-
-export interface NewMenuParams extends BaseMenu, BaseOptions {}
-export interface UpdateMenuPayload extends BaseOptions {
-  id: number;
-  name: string;
-  price: number;
+export interface UpdateMenuPayload extends Menu, BaseOptions {
+  locationId?: number;
+  isAvailable?: boolean;
+  menuCategoryIds?: number[];
 }
+export interface NewMenuParams extends BaseMenu, BaseOptions {}

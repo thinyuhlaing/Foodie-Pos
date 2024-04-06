@@ -7,6 +7,9 @@ import {
 import { Menu } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { stat } from "fs";
+import { replaceMenuCategory } from "./menuCategorySlice";
+import { setInit } from "./appSlice";
+import { setDisabledLocationMenu } from "./disabledLocationMenuSlice";
 
 interface MenuSlice {
   menus: Menu[];
@@ -39,29 +42,29 @@ export const createMenu = createAsyncThunk(
   }
 );
 
-// export const updateMenu = createAsyncThunk(
-//   "menuCategory/updateMenu",
-//   async (payload: UpdateMenuPayload, thunkApi) => {
-//     const { onSuccess } = payload;
-//     const response = await fetch(`${config.backofficeApiBaseUrl}/menu`, {
-//       method: "PUT",
-//       headers: {
-//         "content-type": "application/json",
-//       },
-//       body: JSON.stringify(payload),
-//     });
-//     const dataFromServer = await response.json();
-//     const { updatedMenu } = dataFromServer;
-//     onSuccess && onSuccess();
-//     thunkApi.dispatch(replaceMenuCategory(updatedMenu));
-//   }
-// );
+export const updateMenu = createAsyncThunk(
+  "menuCategory/updateMenu",
+  async (payload: UpdateMenuPayload, thunkApi) => {
+    const { onSuccess } = payload;
+    const response = await fetch(`${config.backofficeApiBaseUrl}/menu`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const dataFromServer = await response.json();
+    const { updatedMenu, disabledLocationMenus } = dataFromServer;
+    onSuccess && onSuccess();
+    thunkApi.dispatch(replaceMenuCategory(updatedMenu));
+    thunkApi.dispatch(setDisabledLocationMenu(disabledLocationMenus));
+  }
+);
 
 export const deleteMenu = createAsyncThunk(
   "menuCategory/deleteMenuCategory",
   async (payload: DeleteMenuPayload, thunkApi) => {
     const { id, onSuccess } = payload;
-    console.log(id);
     const response = await fetch(
       `${config.backofficeApiBaseUrl}/menu?id=${id}`,
       {
@@ -101,7 +104,6 @@ export const menuSlice = createSlice({
         state.error = null;
       })
       .addCase(createMenu.fulfilled, (state, action) => {
-        state.menus = [...state.menus, action.payload];
         state.isLoading = false;
       })
       .addCase(createMenu.rejected, (state) => {

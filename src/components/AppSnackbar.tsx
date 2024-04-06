@@ -10,7 +10,7 @@ const AppSnackbar = () => {
   useEffect(() => {
     setTimeout(() => {
       dispatch(hideSnackbar());
-    }, 3000);
+    }, 6000);
   }, [message]);
 
   return (

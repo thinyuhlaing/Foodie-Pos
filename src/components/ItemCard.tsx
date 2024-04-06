@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/store/hooks";
 import { Box, Paper, Typography } from "@mui/material";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -8,6 +9,7 @@ interface Props {
   href: string;
   isAvailable?: boolean;
   subtitle?: string;
+  location?: boolean;
 }
 
 export default function ItemCard({
@@ -16,10 +18,16 @@ export default function ItemCard({
   href,
   subtitle,
   isAvailable,
+  location,
 }: Props) {
+  const { selectedLocation } = useAppSelector((state) => state.app);
+  const selected = selectedLocation?.name === title ? true : false;
+
   return (
     <Link href={href} style={{ textDecoration: "none", color: "#000000" }}>
       <Paper
+        className="relative"
+        onClick={() => console.log("click", isAvailable)}
         elevation={2}
         sx={{
           width: 170,
@@ -34,6 +42,13 @@ export default function ItemCard({
           cursor: "pointer",
         }}
       >
+        {selected ? (
+          <span className="absolute top-2 right-2 inline-flex h-5 w-5 rounded-full bg-white-createB opacity-75"></span>
+        ) : location ? (
+          <span className="absolute top-2 right-2 inline-flex h-5 w-5 rounded-full bg-slate-300 opacity-75"></span>
+        ) : (
+          ""
+        )}
         <Typography sx={{ fontWeight: "700" }}>{title}</Typography>
       </Paper>
     </Link>

@@ -12,12 +12,18 @@ import CategoryIcon from "@mui/icons-material/Category";
 function Menu() {
   const { menus } = useAppSelector((state) => state.menu);
   const [open, setOpen] = useState(false);
+
   const [newMenu, setNewMenu] = useState<CreateMenuPayload>({
     name: "",
     price: 0,
     menuCategoryIds: [],
   });
+  const { selectedLocation } = useAppSelector((state) => state.app);
 
+  const { disabledLocationMenus } = useAppSelector(
+    (state) => state.disabledLocationMenu
+  );
+  console.log(newMenu);
   return (
     <Layout_Back>
       <motion.button
@@ -30,14 +36,22 @@ function Menu() {
         Menu
       </motion.button>
 
-      <Box className="flex flex-warp">
-        {menus.map((item) => {
+      <Box className="flex flex-wrap">
+        {menus.map((menu) => {
+          const isAvailable = disabledLocationMenus.find(
+            (item) =>
+              item.menuId === menu.id &&
+              item.locationId === selectedLocation?.id
+          )
+            ? false
+            : true;
           return (
             <ItemCard
-              key={item.id}
+              key={menu.id}
               icon={<CategoryIcon />}
-              title={item.name}
-              href={`/backoffice/menu/${item.id}`}
+              title={menu.name}
+              href={`/backoffice/menu/${menu.id}`}
+              isAvailable={isAvailable}
             />
           );
         })}
