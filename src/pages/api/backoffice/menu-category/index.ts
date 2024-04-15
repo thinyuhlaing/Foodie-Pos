@@ -57,15 +57,18 @@ export default async function handler(
         await prisma.disabledLocationMenuCategory.findMany({
           where: { locationId: locationId },
         });
+
       // const disabledLocationMenuCategoriesAdd =
       //   await prisma.disabledLocationMenuCategory.findMany({
       //     where: { menuCategoryId: id },
-      //   }); call fetch data instand of disabledLocationMenuCategoriesAdd data
+      //   });
+
       return res
         .status(200)
         .json({ updatedMenuCategory, disabledLocationMenuCategories });
     }
   } else if (method === "DELETE") {
+    //backoffice/addon-category?id=${id} ---> id=1
     const menuCategoryId = Number(req.query.id);
 
     const exist = await prisma.menuCategory.findFirst({

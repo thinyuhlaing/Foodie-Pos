@@ -1,14 +1,53 @@
 import Layout_Back from "@/components/Layout_Back";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import ClassIcon from "@mui/icons-material/Class";
+import AddonCategoryDialog from "@/components/AddonCategoryDialog";
+import { CreateAddonCategoryPayload } from "@/types/addonCategory";
+import { useAppSelector } from "@/store/hooks";
+import AppCard from "@/components/AppCard";
+import { motion } from "framer-motion";
+import { createVariants } from "@/components/DeleteDialog";
 
-function AddonCategory() {
+export default function AddonCategory() {
+  const { addonCategories } = useAppSelector((state) => state.addonCategory);
+  const [open, setOpen] = useState(false);
+  const [newAddonCategory, setNewAddonCategory] =
+    useState<CreateAddonCategoryPayload>({
+      name: "",
+      isRequired: false,
+      menuIds: [],
+    });
+
   return (
     <Layout_Back>
-      <Button variant="contained" className="button">
-        Addon Category
-      </Button>
+      <motion.button
+        className=" button"
+        variants={createVariants}
+        initial="start"
+        whileHover="hover"
+        onClick={() => setOpen(true)}
+      >
+        AddonCategory
+      </motion.button>
+      <Box className="flex flex-wrap ">
+        {addonCategories.map((addonCategory) => {
+          return (
+            <AppCard
+              key={addonCategory.id}
+              icon={<ClassIcon />}
+              title={addonCategory.name}
+              href={`/backoffice/addon-category/${addonCategory.id}`}
+            />
+          );
+        })}
+      </Box>
+      <AddonCategoryDialog
+        open={open}
+        setOpen={setOpen}
+        newAddonCategory={newAddonCategory}
+        setNewAddonCategory={setNewAddonCategory}
+      />
     </Layout_Back>
   );
 }
-
-export default AddonCategory;

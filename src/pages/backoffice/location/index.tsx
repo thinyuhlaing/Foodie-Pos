@@ -40,7 +40,6 @@ function Location() {
               icon={<CategoryIcon />}
               title={item.name}
               href={`/backoffice/location/${item.id}`}
-              location={true}
             />
           );
         })}

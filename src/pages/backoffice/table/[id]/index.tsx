@@ -24,62 +24,51 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MenuCategory } from "@prisma/client";
 import MultiSelect from "@/components/MultiSelect";
+import { UpdateAddonCategoryPayload } from "@/types/addonCategory";
+import {
+  deleteAddonCategory,
+  updateAddonCategory,
+} from "@/store/slices/addonCategorySlice";
+import { UpdateAddonPayload } from "@/types/addon";
+import SingleSelect from "@/components/SingleSelect";
+import { deleteAddon, updateAddon } from "@/store/slices/addonSlice ";
+import { UpdateTablePayload } from "@/types/table";
+import { deleteTable, updateTable } from "@/store/slices/tableSlice";
 import { motion } from "framer-motion";
-const MenuCategoryDetail = () => {
+const AddonCategoryDetail = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [updateData, setUpdateData] = useState<UpdateMenuPayload>();
+  const [updateData, setUpdateData] = useState<UpdateTablePayload>();
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [selected, setSelected] = useState<number[]>([]);
+  const [selected, setSelected] = useState<number>();
+  const tableId = Number(router.query.id); //router:query {id: '1'}
+  const { tables } = useAppSelector((state) => state.table);
+  const table = tables.find((item) => item.id === tableId);
+  const { locations } = useAppSelector((state) => state.location);
 
-  const menuId = Number(router.query.id); //router:query {id: '1'}
-  const { menus } = useAppSelector((state) => state.menu);
-  const menu = menus.find((item) => item.id === menuId);
-  const { menuCategoryMenus } = useAppSelector(
-    (state) => state.menuCategoryMenu
-  );
-  const { menuCategories } = useAppSelector((state) => state.menuCategory);
-  const selectedLocation = useAppSelector(
-    (state) => state.app.selectedLocation
-  );
-
-  const selectedMenuCategoryIds = menuCategoryMenus
-    .filter((item) => item.menuId === menuId)
-    .map((item) => {
-      const menuCategory = menuCategories.find(
-        (menuCategory) => menuCategory.id === item.menuCategoryId
-      ) as MenuCategory;
-      return menuCategory.id;
-    });
-
-  const { disabledLocationMenus } = useAppSelector(
-    (state) => state.disabledLocationMenu
-  );
-  const isAvailable = disabledLocationMenus.find(
-    (item) => item.locationId === selectedLocation?.id && item.menuId === menuId
-  )
-    ? false
-    : true;
   useEffect(() => {
-    if (menu) {
-      setUpdateData(menu);
-      setSelected(selectedMenuCategoryIds);
+    if (table) {
+      setUpdateData({ ...table });
+      setSelected(table.locationId);
     }
-  }, [menu]);
+  }, [table]);
 
   useEffect(() => {
-    if (updateData) {
+    if (updateData && selected) {
       setUpdateData({
         ...updateData,
-        locationId: selectedLocation?.id,
-        isAvailable,
-        menuCategoryIds: selected,
+        locationId: selected,
       });
     }
   }, [selected]);
 
-  console.log("menu:", updateData);
-
+  if (!updateData) {
+    return (
+      <Layout_Back>
+        <Typography> Table not found</Typography>
+      </Layout_Back>
+    );
+  }
   const handleUpdate = () => {
     // const shouldUpdate =
     //   updateData?.name !== menu?.name || updateData?.price !== menu?.price;
@@ -88,63 +77,43 @@ const MenuCategoryDetail = () => {
     // }
     updateData &&
       dispatch(
-        updateMenu({
+        updateTable({
           ...updateData,
           onSuccess: () => {
             dispatch(
               showSnackbar({
                 type: "success",
-                message: "Updated menu created successfully",
+                message: "Updated table  successfully",
               })
             );
-            router.push("/backoffice/menu");
+            router.push("/backoffice/table");
+          },
+          onError: () => {
+            dispatch(
+              showSnackbar({
+                type: "error",
+                message: "Error occurred when updating table",
+              })
+            );
           },
         })
       );
   };
-
-  if (!updateData) {
-    return (
-      <Layout_Back>
-        <Typography>Menu category not found</Typography>
-      </Layout_Back>
-    );
-  }
-
   return (
     <Layout_Back>
       <Box className=" flex justify-between">
-        <Box className="flex flex-col w-80  justify-between h-[22rem]  ">
+        <Box className="flex flex-col w-80  justify-between h-[15rem] ">
           <TextField
             value={updateData.name}
             onChange={(evt) =>
               setUpdateData({ ...updateData, name: evt.target.value })
             }
           />
-          <TextField
-            value={updateData.price}
-            onChange={(evt) =>
-              setUpdateData({ ...updateData, price: Number(evt.target.value) })
-            }
-          />
-
-          <MultiSelect
-            title="Menu Category"
+          <SingleSelect
+            title="Addon Category"
             selected={selected}
             setSelected={setSelected}
-            items={menuCategories}
-          />
-
-          <FormControlLabel
-            control={
-              <Checkbox
-                defaultChecked={isAvailable}
-                onChange={(evt, value) =>
-                  setUpdateData({ ...updateData, isAvailable: value })
-                }
-              />
-            }
-            label="Available"
+            items={locations}
           />
           <motion.button
             className="create-b mt-5"
@@ -171,13 +140,13 @@ const MenuCategoryDetail = () => {
         open={open}
         setOpen={setOpen}
         handleDelete={() => {
-          dispatch(deleteMenu({ id: menuId }));
+          dispatch(deleteTable({ id: tableId }));
           setOpen(false);
-          router.push("/backoffice/menu");
+          router.push("/backoffice/table");
         }}
       />
     </Layout_Back>
   );
 };
 
-export default MenuCategoryDetail;
+export default AddonCategoryDetail;

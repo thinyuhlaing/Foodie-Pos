@@ -21,9 +21,10 @@ import { CreateMenuPayload } from "@/types/menu";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { showSnackbar } from "@/store/slices/appSnackbarSlice";
 import { createMenu } from "@/store/slices/menuSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MenuCategory } from "@prisma/client";
 import { useRouter } from "next/router";
+import MultiSelect from "./MultiSelect";
 
 interface Props {
   open: boolean;
@@ -43,7 +44,7 @@ export default function MenuDialog({
 }: Props) {
   const dispatch = useAppDispatch();
   const { menuCategories } = useAppSelector((state) => state.menuCategory);
-  // const [selected, setSelected] = useState<number[]>([]);
+  const [selected, setSelected] = useState<number[]>([]);
   const router = useRouter();
   const handleCreateMenu = () => {
     const isValid =
@@ -73,6 +74,11 @@ export default function MenuDialog({
       })
     );
   };
+
+  useEffect(() => {
+    setNewMenu({ ...newMenu, menuCategoryIds: selected });
+  }, [selected]);
+
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <Box className="bg-[#FBF6EE]">
@@ -94,41 +100,12 @@ export default function MenuDialog({
                 setNewMenu({ ...newMenu, price: Number(evt.target.value) })
               }
             />
-            <FormControl className=" w-full">
-              <InputLabel>Menu Category</InputLabel>
-              <Select
-                multiple
-                value={newMenu.menuCategoryIds}
-                input={<OutlinedInput label="Menu Category" />}
-                onChange={(evt) => {
-                  const selected = evt.target.value as number[];
-                  setNewMenu({ ...newMenu, menuCategoryIds: selected });
-                }}
-                renderValue={() => {
-                  const selectedMenuCategories = newMenu.menuCategoryIds.map(
-                    (selectedId) =>
-                      menuCategories.find(
-                        (item) => item.id === selectedId
-                      ) as MenuCategory
-                  );
-                  return selectedMenuCategories
-                    .map((item) => item.name)
-                    .join(", ");
-                }}
-              >
-                {menuCategories.map((item) => {
-                  return (
-                    <MenuItem key={item.id} value={item.id}>
-                      {/*value*/}
-                      <Checkbox
-                        checked={newMenu.menuCategoryIds.includes(item.id)}
-                      />
-                      <ListItemText primary={item.name} />
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <MultiSelect
+              title="Menu Category"
+              selected={selected}
+              setSelected={setSelected}
+              items={menuCategories}
+            />
           </Box>
         </DialogContent>
         <DialogActions>

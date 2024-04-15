@@ -1,4 +1,3 @@
-import ItemCard from "@/components/ItemCard";
 import Layout_Back from "@/components/Layout_Back";
 import MenuCategoryDialog from "@/components/MenuCategoryDialog";
 import { useAppSelector } from "@/store/hooks";
@@ -7,6 +6,7 @@ import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import CategoryIcon from "@mui/icons-material/Category";
 import { useRouter } from "next/router";
+import AppCard from "@/components/AppCard";
 const MenuCategory = () => {
   const { company } = useAppSelector((state) => state.company);
   const { menuCategories } = useAppSelector((state) => state.menuCategory);
@@ -58,7 +58,7 @@ const MenuCategory = () => {
             ? false
             : true;
           return (
-            <ItemCard
+            <AppCard
               key={menuCategoy.id}
               icon={<CategoryIcon />}
               title={menuCategoy.name}

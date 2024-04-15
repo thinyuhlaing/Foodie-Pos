@@ -1,4 +1,4 @@
-import DeleteDialog from "@/components/DeleteDialog";
+import DeleteDialog, { createVariants } from "@/components/DeleteDialog";
 import Layout_Back from "@/components/Layout_Back";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setSelectedLocation } from "@/store/slices/appSlice";
@@ -13,6 +13,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -85,13 +86,15 @@ export default function locationDetail() {
             }
             label="Current location"
           />
-          <Button
-            className="create-b "
-            sx={{ mt: 4, width: "fit-content" }}
+          <motion.button
+            className="create-b mt-5"
+            variants={createVariants}
+            initial="start"
+            whileHover="hover"
             onClick={handleUpdate}
           >
             Update
-          </Button>
+          </motion.button>
         </Box>
 
         <Button

@@ -8,6 +8,10 @@ import menuCategoryMenuReducer from "./slices/menuCategoryMenuSlice";
 import locationSliceReducer from "./slices/locationSlice";
 import disabledLocationMenuCategoryReducer from "./slices/disabledLocationMenuCategorySlice";
 import disabledLocationMenuReducer from "./slices/disabledLocationMenuSlice";
+import addonCategoryReducer from "./slices/addonCategorySlice";
+import menuAddonCategoryReducer from "./slices/menuAddonCategorySlice";
+import addonReducer from "./slices/addonSlice ";
+import tableReducer from "./slices/tableSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +24,10 @@ export const store = configureStore({
     location: locationSliceReducer,
     disabledLocationMenuCategory: disabledLocationMenuCategoryReducer,
     disabledLocationMenu: disabledLocationMenuReducer,
+    addonCategory: addonCategoryReducer,
+    menuAddonCategory: menuAddonCategoryReducer,
+    addon: addonReducer,
+    table: tableReducer,
   },
 });
 

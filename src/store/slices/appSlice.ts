@@ -9,6 +9,10 @@ import { setLocation } from "./locationSlice";
 import { Location } from "@prisma/client";
 import { setDisabledLocationMenuCategory } from "./disabledLocationMenuCategorySlice";
 import { setDisabledLocationMenu } from "./disabledLocationMenuSlice";
+import { setMenuAddonCategory } from "./menuAddonCategorySlice";
+import { setAddonCategory } from "./addonCategorySlice";
+import { setAddon } from "./addonSlice ";
+import { setTable } from "./tableSlice";
 const initialState: AppSlice = {
   init: false,
   selectedLocation: null,
@@ -29,8 +33,12 @@ export const fetchAppData = createAsyncThunk(
       locations,
       disabledLocationMenuCategories,
       disabledLocationMenus,
+      menuAddonCategories,
+      addonCategories,
+      addons,
+      tables,
     } = dataFromServer;
-    console.log("client:", dataFromServer);
+    console.log("AlldataFromServer:", dataFromServer);
     thunkApi.dispatch(setCompany(company));
     thunkApi.dispatch(setMenus(menus));
     thunkApi.dispatch(setMenuCategories(menuCategories));
@@ -41,6 +49,12 @@ export const fetchAppData = createAsyncThunk(
       setDisabledLocationMenuCategory(disabledLocationMenuCategories)
     );
     thunkApi.dispatch(setDisabledLocationMenu(disabledLocationMenus));
+
+    thunkApi.dispatch(setAddonCategory(addonCategories));
+    thunkApi.dispatch(setMenuAddonCategory(menuAddonCategories));
+    thunkApi.dispatch(setAddon(addons));
+    thunkApi.dispatch(setTable(tables));
+
     const selectedLocationId = localStorage.getItem("selectedLocationId");
     if (selectedLocationId) {
       const selectedLocation = locations.find(

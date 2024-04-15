@@ -16,8 +16,14 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import ListBox from "./ListBox";
 
 export default function SideBar() {
+  const [select, setSelect] = useState();
+  const router = useRouter();
+
   const sidebarItems = [
     {
       id: 1,
@@ -62,6 +68,38 @@ export default function SideBar() {
       route: "/backoffice/location",
     },
   ];
+  // const [click, setClick] = useState("side-bar-items");
+  // const sideBarName = sidebarItems.map(
+  //   (item) => item.route.split("backoffice/")[1]
+  // );
+  // const routeNames = router.asPath.split("backoffice/")[1];
+  // const toShow = sideBarName.find((item) => item === routeNames);
+  // console.log("toShow :", toShow);
+  // localStorage.setItem("selectedSideBarItem", String(toShow));
+  // console.log("routeNames :", routeNames);
+
+  // useEffect(() => {
+  //   const selected = localStorage.getItem("selectedSideBarItem");
+  //   console.log("selected :", selected);
+
+  //   if ("order" === "order") {
+  //     setClick("side-bar-item-click");
+  //   } else {
+  //     setClick("side-bar-items");
+  //   }
+  // }, []);
+  //   if (selected === toShow) {
+  //     setClick("side-bar-items active:bg-[#F5E2C3]");
+  //   } else {
+  //     setClick("side-bar-items");
+  //   }
+  // }, [selected]);
+  // const handleClick = () => {
+  //  onClick={() => handleClick()}
+  //   if (selected === toShow) {
+  //     setClick("side-bar-items-click");
+  //   } else {
+  //     setClick("side-bar-items ");
   return (
     <Box>
       <Box className="side-bar ">
@@ -72,26 +110,18 @@ export default function SideBar() {
               href={item.route}
               style={{ textDecoration: "none", cursor: "pointer" }}
             >
-              <ListItem disablePadding className="side-bar-items">
-                <ListItemButton>
-                  <ListItemIcon className="list-icon">{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.label} className="list-text" />
-                </ListItemButton>
-              </ListItem>
+              <ListBox icon={item.icon} label={item.label} route={item.route} />
             </Link>
           ))}
         </List>
         <Divider />
         <List>
           <Link href={"/backoffice/setting"} style={{ textDecoration: "none" }}>
-            <ListItem disablePadding className="side-bar-items">
-              <ListItemButton>
-                <ListItemIcon className="list-icon">
-                  <SettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary={"Settings"} className="list-text" />
-              </ListItemButton>
-            </ListItem>
+            <ListBox
+              icon={<SettingsIcon />}
+              label="Settings"
+              route="/backoffice/setting"
+            />
           </Link>
         </List>
       </Box>

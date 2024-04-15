@@ -1,4 +1,4 @@
-import DeleteDialog from "@/components/DeleteDialog";
+import DeleteDialog, { createVariants } from "@/components/DeleteDialog";
 import Layout_Back from "@/components/Layout_Back";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { showSnackbar } from "@/store/slices/appSnackbarSlice";
@@ -16,6 +16,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -104,13 +105,15 @@ const MenuCategoryDetail = () => {
             className="text-white-text"
             label="Available"
           />
-          <Button
-            className="create-b "
-            sx={{ mt: 4, width: "fit-content" }}
+          <motion.button
+            className="create-b mt-5"
+            variants={createVariants}
+            initial="start"
+            whileHover="hover"
             onClick={handleUpdate}
           >
             Update
-          </Button>
+          </motion.button>
         </Box>
 
         <Button

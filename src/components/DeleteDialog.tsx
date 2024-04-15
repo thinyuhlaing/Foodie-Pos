@@ -37,6 +37,17 @@ export const deleteVariants = {
   },
 };
 
+export const createVariants = {
+  start: {
+    y: 0,
+  },
+  hover: {
+    y: -3,
+    textShadow: "0px 0px 8px rgb(74, 122, 54)",
+    boxShadow: "0px 0px 10px rgb(114, 164, 93)",
+  },
+};
+
 const DeleteDialog = ({
   title,
   content,

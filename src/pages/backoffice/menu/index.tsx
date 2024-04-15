@@ -1,4 +1,3 @@
-import ItemCard from "@/components/ItemCard";
 import Layout_Back from "@/components/Layout_Back";
 import MenuDialog from "@/components/MenuDialog";
 import { buttonVariants } from "@/components/TopBar";
@@ -8,7 +7,8 @@ import { Box, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import CategoryIcon from "@mui/icons-material/Category";
-
+import AppCard from "@/components/AppCard";
+import Image from "../../../img/FoodiePos.jpg";
 function Menu() {
   const { menus } = useAppSelector((state) => state.menu);
   const [open, setOpen] = useState(false);
@@ -23,11 +23,10 @@ function Menu() {
   const { disabledLocationMenus } = useAppSelector(
     (state) => state.disabledLocationMenu
   );
-  console.log(newMenu);
   return (
     <Layout_Back>
       <motion.button
-        className="button"
+        className="button "
         variants={buttonVariants}
         initial="start"
         whileHover="hover"
@@ -46,12 +45,14 @@ function Menu() {
             ? false
             : true;
           return (
-            <ItemCard
+            <AppCard
               key={menu.id}
-              icon={<CategoryIcon />}
+              // icon={Image}
+              img={Image}
               title={menu.name}
               href={`/backoffice/menu/${menu.id}`}
               isAvailable={isAvailable}
+              price={menu.price}
             />
           );
         })}

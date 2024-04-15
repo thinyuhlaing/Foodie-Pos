@@ -9,7 +9,6 @@ interface Props {
   href: string;
   isAvailable?: boolean;
   subtitle?: string;
-  location?: boolean;
 }
 
 export default function ItemCard({
@@ -18,7 +17,6 @@ export default function ItemCard({
   href,
   subtitle,
   isAvailable,
-  location,
 }: Props) {
   const { selectedLocation } = useAppSelector((state) => state.app);
   const selected = selectedLocation?.name === title ? true : false;
@@ -44,10 +42,8 @@ export default function ItemCard({
       >
         {selected ? (
           <span className="absolute top-2 right-2 inline-flex h-5 w-5 rounded-full bg-white-createB opacity-75"></span>
-        ) : location ? (
-          <span className="absolute top-2 right-2 inline-flex h-5 w-5 rounded-full bg-slate-300 opacity-75"></span>
         ) : (
-          ""
+          <span className="absolute top-2 right-2 inline-flex h-5 w-5 rounded-full bg-slate-300 opacity-75"></span>
         )}
         <Typography sx={{ fontWeight: "700" }}>{title}</Typography>
       </Paper>

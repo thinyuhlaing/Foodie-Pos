@@ -53,7 +53,7 @@ export const createMenuCategroy = createAsyncThunk(
 export const updateMenuCategory = createAsyncThunk(
   "menuCategory/updateMenuCategory",
   async (payload: UpdateMenuCategoryPayload, thunkApi) => {
-    const { onSuccess } = payload;
+    const { onSuccess, isAvailable } = payload;
     const response = await fetch(
       `${config.backofficeApiBaseUrl}/menu-category`,
       {
@@ -67,12 +67,13 @@ export const updateMenuCategory = createAsyncThunk(
     const dataFromServer = await response.json();
     const { updatedMenuCategory, disabledLocationMenuCategories } =
       dataFromServer;
-    console.log("hey:", disabledLocationMenuCategories);
+    console.log("add:", disabledLocationMenuCategories);
     onSuccess && onSuccess();
 
     thunkApi.dispatch(
       setDisabledLocationMenuCategory(disabledLocationMenuCategories)
     );
+
     thunkApi.dispatch(replaceMenuCategory(updatedMenuCategory));
 
     // thunkApi.dispatch(

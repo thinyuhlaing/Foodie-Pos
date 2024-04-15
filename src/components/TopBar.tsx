@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useAppSelector } from "@/store/hooks";
+import { useRouter } from "next/router";
 
 export const buttonVariants = {
   start: {
@@ -39,7 +40,15 @@ const animation = {
 export default function TopBar() {
   const { selectedLocation } = useAppSelector((state) => state.app);
   const { data } = useSession();
-
+  const router = useRouter();
+  const handleRoute = () => {
+    if (data) {
+      signOut();
+      router.push("/auth/signIn");
+    } else {
+      signIn();
+    }
+  };
   return (
     <Box className="top-bar">
       <Box className="logo-name">
@@ -69,7 +78,7 @@ export default function TopBar() {
       </Typography>
       <Link href="../auth/signIn">
         <motion.button
-          onClick={() => (data ? signOut() : signIn())}
+          onClick={handleRoute}
           className="sign-in-out"
           variants={buttonVariants}
           initial="start"

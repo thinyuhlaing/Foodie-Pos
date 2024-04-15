@@ -21,13 +21,16 @@ export default async function handler(
           where: { id: companyId },
         }); // company {} from companyTable
         const locations = await prisma.location.findMany({
+          orderBy: [{ id: "asc" }],
           where: { companyId },
         }); // locations {} from locationsTable
         const locationIds = locations.map((item) => item.id); // locationIds from locationsTable
         const tables = await prisma.table.findMany({
-          where: { locationId: { in: locationIds } }, // where locationId in locationIds
+          orderBy: [{ id: "asc" }],
+          where: { locationId: { in: locationIds }, isArchived: false }, // where locationId in locationIds
         });
         const menuCategories = await prisma.menuCategory.findMany({
+          orderBy: [{ id: "asc" }],
           where: { companyId, isArchived: false },
         });
         const menuCategoryIds = menuCategories.map((item) => item.id);
@@ -43,6 +46,7 @@ export default async function handler(
         );
 
         const menus = await prisma.menu.findMany({
+          orderBy: [{ id: "asc" }],
           where: { id: { in: menuCategoryMenuIds }, isArchived: false },
         });
         const menuIds = menus.map((item) => item.id);
@@ -58,16 +62,21 @@ export default async function handler(
             id: {
               in: menuAddonCategories.map((item) => item.addonCategoryId),
             },
+            isArchived: false,
           },
         });
         const addons = await prisma.addon.findMany({
+          orderBy: [{ id: "asc" }],
           where: {
             addonCategoryId: {
               in: addonCategories.map((item) => item.id),
             },
+            isArchived: false,
           },
         });
 
+        console.log("addons :", addons);
+        console.log("addonCategories :", addonCategories);
         res.status(200).json({
           company,
           menus,

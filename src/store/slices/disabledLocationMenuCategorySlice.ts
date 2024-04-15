@@ -20,11 +20,11 @@ export const disabledLocationMenuCategorySlice = createSlice({
     },
     addDisabledLocationMenuCategory: (
       state,
-      action: PayloadAction<DisabledLocationMenuCategory>
+      action: PayloadAction<DisabledLocationMenuCategory[]>
     ) => {
       state.disabledLocationMenuCategories = [
         ...state.disabledLocationMenuCategories,
-        action.payload,
+        ...action.payload,
       ];
     },
     removeDisabledLocationMenuCategory: (
