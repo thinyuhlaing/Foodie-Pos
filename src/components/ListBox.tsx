@@ -23,26 +23,25 @@ export interface ListBoxProps {
 
 const ListBox = ({ label, icon, route }: ListBoxProps) => {
   const [isClicked, setIsClicked] = useState("side-bar-items");
+
   const selected = localStorage.getItem("selectedSideBarItem");
 
   useEffect(() => {
+    //   console.log("route && selected", route, "&&", selected);
+
     if (selected === route) {
       setIsClicked("side-bar-items-click");
     } else {
       setIsClicked("side-bar-items");
     }
-  }, []);
+  }, [selected]);
 
   const handleClick = () => {
-    if (isClicked === "side-bar-items") {
-      setIsClicked("side-bar-items-click");
-      localStorage.setItem("selectedSideBarItem", route);
-    } else {
-      setIsClicked("side-bar-items");
-    }
+    localStorage.setItem("selectedSideBarItem", route);
   };
   return (
     <ListItem disablePadding>
+      {/* onClick={handleClick} */}
       <ListItemButton className={isClicked} onClick={handleClick}>
         <ListItemIcon className="list-icon">{icon}</ListItemIcon>
         <ListItemText primary={label} className="list-text" />

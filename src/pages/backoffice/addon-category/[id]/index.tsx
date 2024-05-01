@@ -1,5 +1,4 @@
 import DeleteDialog from "@/components/DeleteDialog";
-import Layout_Back from "@/components/Layout_Back";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { showSnackbar } from "@/store/slices/appSnackbarSlice";
 import { updateMenuCategory } from "@/store/slices/menuCategorySlice";
@@ -84,9 +83,9 @@ const AddonCategoryDetail = () => {
   }, [selected]);
   if (!updateData) {
     return (
-      <Layout_Back>
+      <>
         <Typography>Addon category not found</Typography>
-      </Layout_Back>
+      </>
     );
   }
   const handleUpdate = () => {
@@ -115,7 +114,7 @@ const AddonCategoryDetail = () => {
   console.log("updateDataAddonCate :", updateData);
 
   return (
-    <Layout_Back>
+    <>
       <Box className=" flex justify-between">
         <Box className="flex flex-col w-80  justify-between h-[15rem] ">
           <TextField
@@ -158,7 +157,7 @@ const AddonCategoryDetail = () => {
           router.push("/backoffice/addon-category");
         }}
       />
-    </Layout_Back>
+    </>
   );
 };
 

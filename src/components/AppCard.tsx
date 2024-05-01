@@ -7,8 +7,6 @@ import { createVariants } from "./DeleteDialog";
 import { StaticImageData } from "next/image";
 
 interface Props {
-  img?: StaticImageData;
-  icon?: ReactNode;
   title: string;
   href: string;
   isAvailable?: boolean;
@@ -17,8 +15,6 @@ interface Props {
 }
 
 export default function AppCard({
-  img,
-  icon,
   title,
   href,
   subtitle,
@@ -28,19 +24,11 @@ export default function AppCard({
   return (
     <Link href={href} style={{ textDecoration: "none", color: "#000000" }}>
       <Box
-        className="app-card"
+        className="bg-[#FFFFFF] w-52 h-60 flex  items-center justify-center  rounded-3xl p-3 m-3"
         sx={{
           opacity: isAvailable === false ? 0.5 : 1,
         }}
       >
-        {img ? (
-          <img
-            src={img?.src}
-            className="w-24 h-24 bg-blue-300 rounded-full"
-          ></img>
-        ) : (
-          icon
-        )}
         <Box className="text-center  p-1 px-3">
           <Typography className="font-semibold text-lg">{title}</Typography>
           {price && (

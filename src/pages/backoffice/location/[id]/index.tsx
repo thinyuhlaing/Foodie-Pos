@@ -1,5 +1,4 @@
 import DeleteDialog, { createVariants } from "@/components/DeleteDialog";
-import Layout_Back from "@/components/Layout_Back";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setSelectedLocation } from "@/store/slices/appSlice";
 import { showSnackbar } from "@/store/slices/appSnackbarSlice";
@@ -36,9 +35,9 @@ export default function locationDetail() {
 
   if (!updateData) {
     return (
-      <Layout_Back>
+      <>
         <Typography>Location not found</Typography>
-      </Layout_Back>
+      </>
     );
   }
 
@@ -60,7 +59,7 @@ export default function locationDetail() {
   };
 
   return (
-    <Layout_Back>
+    <>
       <Box className=" flex justify-between">
         <Box className="flex flex-col w-80  justify-between h-48 text-white-text">
           <TextField
@@ -117,6 +116,6 @@ export default function locationDetail() {
         //   router.push("/backoffice/menu-category");
         // }}
       />
-    </Layout_Back>
+    </>
   );
 }

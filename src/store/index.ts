@@ -12,6 +12,7 @@ import addonCategoryReducer from "./slices/addonCategorySlice";
 import menuAddonCategoryReducer from "./slices/menuAddonCategorySlice";
 import addonReducer from "./slices/addonSlice ";
 import tableReducer from "./slices/tableSlice";
+import cartReducer from "./slices/cartSlice";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,9 @@ export const store = configureStore({
     menuAddonCategory: menuAddonCategoryReducer,
     addon: addonReducer,
     table: tableReducer,
+    cart: cartReducer,
+    //    order: orderReducer,
+    //  user: userReducer,
   },
 });
 

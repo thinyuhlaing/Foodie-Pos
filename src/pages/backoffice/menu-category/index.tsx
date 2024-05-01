@@ -1,4 +1,3 @@
-import Layout_Back from "@/components/Layout_Back";
 import MenuCategoryDialog from "@/components/MenuCategoryDialog";
 import { useAppSelector } from "@/store/hooks";
 import { CreateMenuCategoryPayload } from "@/types/menuCategory";
@@ -7,13 +6,15 @@ import { useEffect, useState } from "react";
 import CategoryIcon from "@mui/icons-material/Category";
 import { useRouter } from "next/router";
 import AppCard from "@/components/AppCard";
+import { appDataSelector } from "@/store/slices/appSlice";
+import { shallowEqual } from "react-redux";
 const MenuCategory = () => {
-  const { company } = useAppSelector((state) => state.company);
-  const { menuCategories } = useAppSelector((state) => state.menuCategory);
-  const { selectedLocation } = useAppSelector((state) => state.app);
-  const { disabledLocationMenuCategories } = useAppSelector(
-    (state) => state.disabledLocationMenuCategory
-  );
+  const {
+    menuCategories,
+    disabledLocationMenuCategories,
+    selectedLocation,
+    company,
+  } = useAppSelector(appDataSelector, shallowEqual);
 
   const [open, setOpen] = useState<boolean>(false);
   const [newMenuCategory, setNewMenuCategory] =
@@ -40,7 +41,7 @@ const MenuCategory = () => {
   }, [company, selectedLocation, disabledLocationMenuCategories]);
 
   return (
-    <Layout_Back>
+    <>
       <Button
         variant="contained"
         className="button"
@@ -60,7 +61,7 @@ const MenuCategory = () => {
           return (
             <AppCard
               key={menuCategoy.id}
-              icon={<CategoryIcon />}
+              // icon={<CategoryIcon />}
               title={menuCategoy.name}
               isAvailable={isAvailable}
               href={`/backoffice/menu-category/${menuCategoy.id}`}
@@ -74,7 +75,7 @@ const MenuCategory = () => {
         newMenuCategory={newMenuCategory}
         setNewMenuCategory={setNewMenuCategory}
       />
-    </Layout_Back>
+    </>
   );
 };
 

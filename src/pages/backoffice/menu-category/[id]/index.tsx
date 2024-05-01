@@ -1,5 +1,4 @@
 import DeleteDialog, { createVariants } from "@/components/DeleteDialog";
-import Layout_Back from "@/components/Layout_Back";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { showSnackbar } from "@/store/slices/appSnackbarSlice";
 import {
@@ -78,13 +77,13 @@ const MenuCategoryDetail = () => {
 
   if (!updateData) {
     return (
-      <Layout_Back>
+      <>
         <Typography>Menu category not found</Typography>
-      </Layout_Back>
+      </>
     );
   }
   return (
-    <Layout_Back>
+    <>
       <Box className=" flex justify-between">
         <Box className="flex flex-col w-80  justify-between h-48">
           <TextField
@@ -136,7 +135,7 @@ const MenuCategoryDetail = () => {
           router.push("/backoffice/menu-category");
         }}
       />
-    </Layout_Back>
+    </>
   );
 };
 

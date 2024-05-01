@@ -1,4 +1,3 @@
-import Layout_Back from "@/components/Layout_Back";
 import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import ClassIcon from "@mui/icons-material/Class";
@@ -20,7 +19,7 @@ export default function AddonCategory() {
     });
 
   return (
-    <Layout_Back>
+    <>
       <motion.button
         className=" button"
         variants={createVariants}
@@ -35,7 +34,7 @@ export default function AddonCategory() {
           return (
             <AppCard
               key={addonCategory.id}
-              icon={<ClassIcon />}
+              //icon={<ClassIcon />}
               title={addonCategory.name}
               href={`/backoffice/addon-category/${addonCategory.id}`}
             />
@@ -48,6 +47,6 @@ export default function AddonCategory() {
         newAddonCategory={newAddonCategory}
         setNewAddonCategory={setNewAddonCategory}
       />
-    </Layout_Back>
+    </>
   );
 }

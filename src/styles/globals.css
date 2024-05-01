@@ -16,7 +16,7 @@ body {
   color: color-white-text;
 }
 
-.layout {
+.backoffice-layout {
   @apply bg-white-bg  w-screen h-full;
 }
 
@@ -31,7 +31,7 @@ body {
   @apply w-44 h-4/5;
 }
 .logo {
-  @apply w-14 h-full rounded-full z-10;
+  @apply w-16 h-full rounded-full z-10;
 }
 .name {
   @apply my-auto text-[#6ABE46] font-medium text-xl;
@@ -52,7 +52,7 @@ body {
 /* SideBar */
 
 .side-bar {
-  @apply flex flex-col justify-start items-center;
+  @apply flex flex-col justify-start items-center p-3;
   @apply w-[245px] h-lvh bg-white-color rounded-2xl;
 }
 .side-bar-items,
@@ -90,14 +90,14 @@ body {
 /* Container */
 
 .container {
-  @apply bg-white-color w-full h-screen mx-6 p-4 rounded-2xl flex flex-col;
+  @apply bg-white-color max-w-full h-screen mx-6 p-4 rounded-2xl flex flex-col;
 }
 .button {
   @apply bg-white-createB text-white-text   flex justify-center items-center self-end;
 }
 
 .app-card {
-  @apply bg-[#FFFFFF] w-52 h-56 flex flex-col items-center justify-evenly m-3 rounded-3xl;
+  @apply bg-[#FFFFFF] w-52 h-64 flex flex-col items-center justify-between m-3 rounded-3xl p-3;
 }
 
 /* -- - -- */
@@ -119,4 +119,12 @@ body {
 
 .delete-b {
   @apply bg-red-300 text-white-text;
+}
+
+.order-layout {
+  @apply bg-white-color  max-w-full h-screen flex items-center flex-col;
+}
+
+.order-body {
+  @apply w-[70rem] p-4 rounded-2xl flex flex-col relative bottom-24;
 }

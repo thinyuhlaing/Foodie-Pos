@@ -9,11 +9,11 @@ export default async function handler(
   if (method === "GET") {
     return res.status(200).send("OK GET menu");
   } else if (method === "POST") {
-    const { name, price, menuCategoryIds } = req.body;
+    const { name, price, menuCategoryIds, assetUrl } = req.body;
     const isValid = name && price !== undefined && menuCategoryIds.length > 0;
     if (!isValid) return res.status(401).send("Bad request");
     const menu = await prisma.menu.create({
-      data: { name, price },
+      data: { name, price, assetUrl },
     });
     const menuCategoryMenus = await prisma.$transaction(
       menuCategoryIds.map((itemId: number) =>

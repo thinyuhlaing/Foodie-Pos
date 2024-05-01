@@ -10,6 +10,7 @@ export interface CreateMenuPayload extends BaseOptions {
   name: string;
   price: number;
   menuCategoryIds: number[];
+  assetUrl?: string;
 }
 export interface DeleteMenuPayload extends BaseOptions {
   id: number;

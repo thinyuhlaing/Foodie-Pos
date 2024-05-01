@@ -1,5 +1,4 @@
 import ItemCard from "@/components/ItemCard";
-import Layout_Back from "@/components/Layout_Back";
 import LocationDialog from "@/components/LocationDialog";
 import { buttonVariants } from "@/components/TopBar";
 import { useAppSelector } from "@/store/hooks";
@@ -20,9 +19,8 @@ function Location() {
     city: "",
     companyId: companyId,
   });
-  console.log("locations :", locations);
   return (
-    <Layout_Back>
+    <>
       <motion.button
         className="button"
         variants={buttonVariants}
@@ -51,7 +49,7 @@ function Location() {
         location={location}
         setLocation={setLocation}
       ></LocationDialog>
-    </Layout_Back>
+    </>
   );
 }
 

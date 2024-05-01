@@ -1,7 +1,6 @@
 import AddonDialog from "@/components/AddonDialog";
 import AppCard from "@/components/AppCard";
 import { createVariants } from "@/components/DeleteDialog";
-import Layout_Back from "@/components/Layout_Back";
 import { useAppSelector } from "@/store/hooks";
 import { CreateAddonPayload } from "@/types/addon";
 import { Box, Button } from "@mui/material";
@@ -23,9 +22,38 @@ function Addons() {
     locationId: undefined,
     assetUrl: "",
   });
+  // const handleQRImagePrint = (assetUrl: string) => {
+  //   // assetUrl --> https://msquarefdc.sgp1.cdn.digitaloceanspaces.com/foodie-pos/msquarefdc-batch3/thin-yu-hlaing/qrcode/tableId-3.png
+  //   const imageWindow = window.open("");
+  //   imageWindow?.document.write(
+  //     `<html><head><title>Print Image</title></head><body style="text-align: center;"><img src="${assetUrl}" onload="window.print()" /></body></html>`
+  //   );
+  //   // const imageWindow = window.open("");
+  //   // imageWindow?.document.write(
+  //   //   `<html><head><title>Print Image</title></head><body style="text-align: center;"><img src="${assetUrl}" onload="window.print()" /></body></html>`
+  //   // );
+  // };
+
+  const handleQRImagePrint = (assetUrl: string) => {
+    // Open a new window
+    const imageWindow = window.open("");
+    if (imageWindow === null) return;
+    // When the window is loaded, print the image
+    imageWindow.onload = () => {
+      imageWindow.document.write(
+        `<html><head><title>Print Image</title></head><body style="text-align: center;"><img src="${assetUrl}" onload="window.print()"/></body></html>`
+      );
+    };
+
+    //why doesn't work like this?
+    // const imageWindow = window.open("");
+    // imageWindow?.document.write(
+    //   `<html><head><title>Print Image</title></head><body style="text-align: center;"><img src="${assetUrl}" onload="window.print()" /></body></html>`
+    // );
+  };
 
   return (
-    <Layout_Back>
+    <>
       <motion.button
         className="button"
         variants={createVariants}
@@ -37,13 +65,25 @@ function Addons() {
       </motion.button>
       <Box className="flex flex-wrap ">
         {tables.map((table) => {
+          console.log("tableassetUrl", table.assetUrl);
           return (
-            <AppCard
-              key={table.id}
-              icon={<TableBarIcon />}
-              title={table.name}
-              href={`/backoffice/table/${table.id}`}
-            />
+            <Box className="flex flex-col  justify-between items-center  p-3  h-80">
+              <AppCard
+                key={table.id}
+                //   icon={<TableBarIcon />}
+                title={table.name}
+                href={`/backoffice/table/${table.id}`}
+              />
+              <motion.button
+                className="w-1/2 bg-white-createB text-white-text p-2 rounded-xl"
+                variants={createVariants}
+                initial="start"
+                whileHover="hover"
+                onClick={() => handleQRImagePrint(table.assetUrl)}
+              >
+                Print QR
+              </motion.button>
+            </Box>
           );
         })}
       </Box>
@@ -53,7 +93,7 @@ function Addons() {
         newTable={newTable}
         setNewTable={setNewTable}
       />
-    </Layout_Back>
+    </>
   );
 }
 

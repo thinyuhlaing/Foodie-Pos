@@ -75,8 +75,6 @@ export default async function handler(
           },
         });
 
-        console.log("addons :", addons);
-        console.log("addonCategories :", addonCategories);
         res.status(200).json({
           company,
           menus,

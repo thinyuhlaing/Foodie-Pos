@@ -1,7 +1,6 @@
 import AddonDialog from "@/components/AddonDialog";
 import AppCard from "@/components/AppCard";
 import { createVariants } from "@/components/DeleteDialog";
-import Layout_Back from "@/components/Layout_Back";
 import { useAppSelector } from "@/store/hooks";
 import { CreateAddonPayload } from "@/types/addon";
 import { Box, Button } from "@mui/material";
@@ -22,7 +21,7 @@ function Addons() {
   });
 
   return (
-    <Layout_Back>
+    <>
       <motion.button
         className="button"
         variants={createVariants}
@@ -37,7 +36,7 @@ function Addons() {
           return (
             <AppCard
               key={addon.id}
-              icon={<EggIcon />}
+              // icon={<EggIcon />}
               title={addon.name}
               href={`/backoffice/addon/${addon.id}`}
             />
@@ -50,7 +49,7 @@ function Addons() {
         newAddon={newAddon}
         setNewAddon={setNewAddon}
       />
-    </Layout_Back>
+    </>
   );
 }
 

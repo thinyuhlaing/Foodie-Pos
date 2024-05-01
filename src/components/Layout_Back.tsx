@@ -20,11 +20,11 @@ export default function Layout_Back({ children }: Props) {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!init) {
-      dispatch(fetchAppData());
+      dispatch(fetchAppData({}));
     }
   }, []);
   return (
-    <Box className="layout">
+    <Box className="backoffice-layout">
       <TopBar />
       <Box className="side-container">
         {data && <SideBar />}
