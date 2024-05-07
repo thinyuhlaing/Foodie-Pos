@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import AppCard from "@/components/AppCard";
 import { appDataSelector } from "@/store/slices/appSlice";
 import { shallowEqual } from "react-redux";
+import { buttonVariants } from "@/components/TopBar";
+import { motion } from "framer-motion";
 const MenuCategory = () => {
   const {
     menuCategories,
@@ -42,13 +44,15 @@ const MenuCategory = () => {
 
   return (
     <>
-      <Button
-        variant="contained"
+      <motion.button
         className="button"
+        variants={buttonVariants}
+        initial="start"
+        whileHover="hover"
         onClick={() => setOpen(true)}
       >
         MenuCategory
-      </Button>
+      </motion.button>
       <Box className="flex flex-wrap ">
         {menuCategories.map((menuCategoy) => {
           const isAvailable = disabledLocationMenuCategories.find(

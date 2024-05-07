@@ -5,8 +5,8 @@ import { signIn } from "next-auth/react";
 export default function SignIn() {
   return (
     <>
-      <Box className=" px-10 py-[5rem] bg-white-bg w-1/4 h-4/6 flex flex-col justify-between items-center mx-auto mt-6 rounded-xl">
-        <Typography variant="h4" className="text-white-text">
+      <Box className=" px-10 py-[5rem] bg-light-bg w-1/4 h-4/6 flex flex-col justify-between items-center mx-auto mt-6 rounded-xl">
+        <Typography variant="h4" className="text-light-text">
           Login
         </Typography>
         <Box>
@@ -23,13 +23,13 @@ export default function SignIn() {
             className=" w-full"
           />
         </Box>
-        <button className=" bg-white-createB w-full text-black  bg-white text-center rounded-2xl p-3">
+        <button className=" bg-light-createB w-full text-black  bg-light text-center rounded-2xl p-3">
           Login
         </button>
         <Divider> or </Divider>
 
         <button
-          className="w-full h-12 text-black  bg-white  rounded-2xl p-2 bg-[#DEEBCC] justify-center flex items-center"
+          className="w-full h-12 text-black  bg-light  rounded-2xl p-2 bg-[#DEEBCC] justify-center flex items-center"
           onClick={() => signIn("google", { callbackUrl: "/backoffice" })}
         >
           <img

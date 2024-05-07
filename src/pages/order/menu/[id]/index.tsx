@@ -10,6 +10,7 @@ import { shallowEqual } from "react-redux";
 import { nanoid } from "nanoid";
 import { CartItem } from "@/types/cart";
 import { addToCart } from "@/store/slices/cartSlice";
+import defaultImage from "../../../../img/FoodiePos.jpg";
 export default function OrderAppDetail() {
   const { query, isReady, ...router } = useRouter();
   const dispatch = useAppDispatch();
@@ -70,27 +71,31 @@ export default function OrderAppDetail() {
     console.log("requiredAddonCategories", requiredAddonCategories);
     console.log("selectedRequiredAddons", selectedRequiredAddons);
   }, [selectedAddons, addonCategories]);
+  if (!menu) return;
   return (
     <Box>
-      <Typography variant="h4">{menu?.name}</Typography>
-      <AddonCategories
-        addonCategories={validAddonCategories}
-        selectedAddons={selectedAddons}
-        setSelectedAddons={setSelectedAddons}
-      />
-      <QuantitySelector
-        value={quantity}
-        onDecrease={handleQuantityDecrease}
-        onIncrease={handleQuantityIncrease}
-      />
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Button
-          disabled={isDisabled}
-          variant="outlined"
-          onClick={handleAddToCart}
-        >
-          Add to cart
-        </Button>
+      {/* w-[70rem] p-4 rounded-2xl flex flex-col relative bottom-28 bg-pink-300 */}
+
+      <Box className=" w-[40rem] flex justify-between items-center flex-col mx-auto  mt-28 p-3  ">
+        <AddonCategories
+          addonCategories={validAddonCategories}
+          selectedAddons={selectedAddons}
+          setSelectedAddons={setSelectedAddons}
+        />
+        <QuantitySelector
+          value={quantity}
+          onDecrease={handleQuantityDecrease}
+          onIncrease={handleQuantityIncrease}
+        />
+        <Box className="mt-3">
+          <Button
+            disabled={isDisabled}
+            variant="outlined"
+            onClick={handleAddToCart}
+          >
+            Add to cart
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
@@ -157,3 +162,7 @@ export default function OrderAppDetail() {
 // }
 
 // 2. need to explain yourself about work which addon category button ?
+
+// http://localhost:3000/order?tableId=8
+// http://localhost:3000/order/menu/1?tableId=8
+// http://localhost:3000/order/cart?tableId=8

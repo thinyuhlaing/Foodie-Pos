@@ -134,6 +134,7 @@ export const appDataSelector = (state: RootState) => {
     disabledLocationMenuCategories:
       state.disabledLocationMenuCategory.disabledLocationMenuCategories,
     company: state.company.company,
+    items: state.cart.items,
   };
 };
 

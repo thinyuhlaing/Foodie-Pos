@@ -75,7 +75,7 @@ function Addons() {
                 href={`/backoffice/table/${table.id}`}
               />
               <motion.button
-                className="w-1/2 bg-white-createB text-white-text p-2 rounded-xl"
+                className="w-1/2 bg-light-createB text-light-text p-2 rounded-xl"
                 variants={createVariants}
                 initial="start"
                 whileHover="hover"

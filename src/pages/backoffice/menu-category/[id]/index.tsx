@@ -101,7 +101,7 @@ const MenuCategoryDetail = () => {
                 }
               />
             }
-            className="text-white-text"
+            className="text-light-text"
             label="Available"
           />
           <motion.button

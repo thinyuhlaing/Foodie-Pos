@@ -61,7 +61,7 @@ export default function locationDetail() {
   return (
     <>
       <Box className=" flex justify-between">
-        <Box className="flex flex-col w-80  justify-between h-48 text-white-text">
+        <Box className="flex flex-col w-80  justify-between h-48 text-light-text">
           <TextField
             value={updateData.name}
             onChange={(evt) =>

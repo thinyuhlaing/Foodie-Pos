@@ -23,26 +23,22 @@ export interface ListBoxProps {
 
 const ListBox = ({ label, icon, route }: ListBoxProps) => {
   const [isClicked, setIsClicked] = useState("side-bar-items");
-
-  const selected = localStorage.getItem("selectedSideBarItem");
+  const router = useRouter();
+  const urlroute = router.pathname.split("/")[2]; //   ['', 'backoffice', 'table']
+  const nowPath = `/backoffice/${urlroute}`; //  /backoffice/table
 
   useEffect(() => {
-    //   console.log("route && selected", route, "&&", selected);
-
-    if (selected === route) {
+    if (nowPath === route) {
       setIsClicked("side-bar-items-click");
     } else {
       setIsClicked("side-bar-items");
     }
-  }, [selected]);
+  }, [nowPath]);
 
-  const handleClick = () => {
-    localStorage.setItem("selectedSideBarItem", route);
-  };
   return (
     <ListItem disablePadding>
       {/* onClick={handleClick} */}
-      <ListItemButton className={isClicked} onClick={handleClick}>
+      <ListItemButton className={isClicked}>
         <ListItemIcon className="list-icon">{icon}</ListItemIcon>
         <ListItemText primary={label} className="list-text" />
       </ListItemButton>
