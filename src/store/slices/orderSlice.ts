@@ -16,11 +16,13 @@ const initialState: OrderSlice = {
 export const createOrder = createAsyncThunk(
   "order/createOrder",
   async (payload: CreateOrderOptions) => {
-    const responce = await fetch(`${config.orderAppApiUrl}/order`, {
+    const { tableId, cartItems } = payload;
+    const response = await fetch(`${config.orderAppApiUrl}/order`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({}),
+      body: JSON.stringify({ tableId, cartItems }),
     });
+    const dataFromServer = await response.json();
   }
 );
 

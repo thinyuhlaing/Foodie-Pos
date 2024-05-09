@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export default function locationDetail() {
+export default function LocationDetail() {
   const [open, setOpen] = useState(false);
   const [updateData, setUpdateData] = useState<UpdateLocationPayload>();
   const router = useRouter();

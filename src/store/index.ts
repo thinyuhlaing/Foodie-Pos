@@ -13,7 +13,7 @@ import menuAddonCategoryReducer from "./slices/menuAddonCategorySlice";
 import addonReducer from "./slices/addonSlice ";
 import tableReducer from "./slices/tableSlice";
 import cartReducer from "./slices/cartSlice";
-
+import orderReducer from "./slices/orderSlice";
 export const store = configureStore({
   reducer: {
     menu: menuReducer,
@@ -30,7 +30,7 @@ export const store = configureStore({
     addon: addonReducer,
     table: tableReducer,
     cart: cartReducer,
-    //    order: orderReducer,
+    order: orderReducer,
     //  user: userReducer,
   },
 });

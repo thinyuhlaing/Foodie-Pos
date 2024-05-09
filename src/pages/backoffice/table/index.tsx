@@ -64,10 +64,13 @@ function Addons() {
         Tables
       </motion.button>
       <Box className="flex flex-wrap ">
-        {tables.map((table) => {
+        {tables.map((table, index: number) => {
           console.log("tableassetUrl", table.assetUrl);
           return (
-            <Box className="flex flex-col  justify-between items-center  p-3  h-80">
+            <Box
+              className="flex flex-col  justify-between items-center  p-3  h-80"
+              key={index}
+            >
               <AppCard
                 key={table.id}
                 //   icon={<TableBarIcon />}
