@@ -30,7 +30,7 @@ import {
 } from "@/store/slices/addonCategorySlice";
 import { UpdateAddonPayload } from "@/types/addon";
 import SingleSelect from "@/components/SingleSelect";
-import { deleteAddon, updateAddon } from "@/store/slices/addonSlice ";
+import { deleteAddon, updateAddon } from "@/store/slices/addonSlice";
 import { UpdateTablePayload } from "@/types/table";
 import { deleteTable, updateTable } from "@/store/slices/tableSlice";
 import { motion } from "framer-motion";

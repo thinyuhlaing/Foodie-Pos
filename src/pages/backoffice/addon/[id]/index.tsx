@@ -30,7 +30,7 @@ import {
 } from "@/store/slices/addonCategorySlice";
 import { UpdateAddonPayload } from "@/types/addon";
 import SingleSelect from "@/components/SingleSelect";
-import { deleteAddon, updateAddon } from "@/store/slices/addonSlice ";
+import { deleteAddon, updateAddon } from "@/store/slices/addonSlice";
 const AddonCategoryDetail = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [updateData, setUpdateData] = useState<UpdateAddonPayload>();

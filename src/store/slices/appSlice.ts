@@ -11,7 +11,7 @@ import { setDisabledLocationMenuCategory } from "./disabledLocationMenuCategoryS
 import { setDisabledLocationMenu } from "./disabledLocationMenuSlice";
 import { setMenuAddonCategory } from "./menuAddonCategorySlice";
 import { setAddonCategory } from "./addonCategorySlice";
-import { setAddon } from "./addonSlice ";
+import { setAddon } from "./addonSlice";
 import { setTable } from "./tableSlice";
 import { RootState } from "..";
 const initialState: AppSlice = {
@@ -135,6 +135,8 @@ export const appDataSelector = (state: RootState) => {
       state.disabledLocationMenuCategory.disabledLocationMenuCategories,
     company: state.company.company,
     items: state.cart.items,
+    orders: state.order.items,
+    tables: state.table.tables,
   };
 };
 

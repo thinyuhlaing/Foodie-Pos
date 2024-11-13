@@ -28,7 +28,7 @@ import MultiSelect from "./MultiSelect";
 import { createAddonCategroy } from "@/store/slices/addonCategorySlice";
 import { CreateAddonPayload } from "@/types/addon";
 import SingleSelect from "./SingleSelect";
-import { createAddon } from "@/store/slices/addonSlice ";
+import { createAddon } from "@/store/slices/addonSlice";
 import { CreateTablePayload } from "@/types/table";
 import { createTable } from "@/store/slices/tableSlice";
 
