@@ -16,7 +16,7 @@ export default function Layout_Back({ children }: Props) {
     (state) => state.disabledLocationMenuCategory
   );
   const { init } = useAppSelector((state) => state.app);
-  const { data } = useSession();
+  // const { data } = useSession();
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!init) {
@@ -27,7 +27,8 @@ export default function Layout_Back({ children }: Props) {
     <Box className="backoffice-layout">
       <TopBar />
       <Box className="side-container">
-        {data && <SideBar />}
+        {/* {data && <SideBar />} */}
+        <SideBar />
         <Box className="container">
           {/* {data ? "" : ""} */}
           {children}

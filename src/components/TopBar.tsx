@@ -39,7 +39,7 @@ const animation = {
 
 export default function TopBar() {
   const { selectedLocation } = useAppSelector((state) => state.app);
-  const { data } = useSession();
+  // const { data } = useSession();
   const router = useRouter();
   const handleRoute = () => {
     if (data) {
@@ -84,8 +84,10 @@ export default function TopBar() {
           initial="start"
           whileHover="hover"
         >
-          {data ? "" : <AccountCircleIcon />}
-          <Box> {data ? "Sign Out" : "Sign In"}</Box>
+          {/* {data ? "" : <AccountCircleIcon />} */}
+          {/* <Box> {data ? "Sign Out" : "Sign In"}</Box> */}
+          <Box> Sign Out</Box>
+
         </motion.button>
       </Link>
     </Box>
